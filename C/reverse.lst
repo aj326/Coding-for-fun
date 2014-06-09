@@ -1,0 +1,270 @@
+GAS LISTING /tmp/ccVcn7KP.s 			page 1
+
+
+   1              		.file	"reverse.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.globl	my_reverse
+   7              	my_reverse:
+   8              	.LFB2:
+   9              		.file 1 "reverse.c"
+   1:reverse.c     **** #include <stdio.h>
+   2:reverse.c     **** #include <stdlib.h>
+   3:reverse.c     **** // #include <string.h>
+   4:reverse.c     **** void my_reverse(char *s)
+   5:reverse.c     **** {
+  10              		.loc 1 5 0
+  11              		.cfi_startproc
+  12 0000 55       		push	rbp
+  13              	.LCFI0:
+  14              		.cfi_def_cfa_offset 16
+  15              		.cfi_offset 6, -16
+  16 0001 4889E5   		mov	rbp, rsp
+  17              	.LCFI1:
+  18              		.cfi_def_cfa_register 6
+  19 0004 4154     		push	r12
+  20 0006 53       		push	rbx
+  21              		.cfi_offset 12, -24
+  22              		.cfi_offset 3, -32
+  23 0007 48897DD8 		mov	QWORD PTR [rbp-40], rdi
+   6:reverse.c     ****     register int len = -1;
+  24              		.loc 1 6 0
+  25 000b BBFFFFFF 		mov	ebx, -1
+  25      FF
+   7:reverse.c     ****     while (*s)
+  26              		.loc 1 7 0
+  27 0010 EB08     		jmp	.L2
+  28              	.L3:
+   8:reverse.c     ****     {
+   9:reverse.c     ****         s++;
+  29              		.loc 1 9 0
+  30 0012 488345D8 		add	QWORD PTR [rbp-40], 1
+  30      01
+  10:reverse.c     ****         len++;
+  31              		.loc 1 10 0
+  32 0017 83C301   		add	ebx, 1
+  33              	.L2:
+   7:reverse.c     ****     while (*s)
+  34              		.loc 1 7 0 discriminator 1
+  35 001a 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  36 001e 0FB600   		movzx	eax, BYTE PTR [rax]
+  37 0021 84C0     		test	al, al
+  38 0023 75ED     		jne	.L3
+  11:reverse.c     ****     }
+  12:reverse.c     ****     s--;
+  39              		.loc 1 12 0
+  40 0025 48836DD8 		sub	QWORD PTR [rbp-40], 1
+  40      01
+  13:reverse.c     ****     // printf("%d\n", len);
+  14:reverse.c     ****     // printf("after grabbing lengths %c\n", *(s));
+GAS LISTING /tmp/ccVcn7KP.s 			page 2
+
+
+  15:reverse.c     ****     s-=len;
+  41              		.loc 1 15 0
+  42 002a 4863C3   		movsx	rax, ebx
+  43 002d 48F7D8   		neg	rax
+  44 0030 480145D8 		add	QWORD PTR [rbp-40], rax
+  16:reverse.c     ****     // printf("%c\n", *(s+len));
+  17:reverse.c     ****     const int half = len >> 1;
+  45              		.loc 1 17 0
+  46 0034 89D8     		mov	eax, ebx
+  47 0036 D1F8     		sar	eax
+  48 0038 8945EC   		mov	DWORD PTR [rbp-20], eax
+  18:reverse.c     ****     register int loc = 0;
+  49              		.loc 1 18 0
+  50 003b 41BC0000 		mov	r12d, 0
+  50      0000
+  19:reverse.c     ****     // printf("%d\n", half);
+  20:reverse.c     ****     while ( len != half)
+  51              		.loc 1 20 0
+  52 0041 E99D0000 		jmp	.L4
+  52      00
+  53              	.L6:
+  21:reverse.c     ****     {
+  22:reverse.c     ****             // printf("len = %d\n", len);
+  23:reverse.c     ****         if (*(s+loc) != *(s + len))
+  54              		.loc 1 23 0
+  55 0046 4963D4   		movsx	rdx, r12d
+  56 0049 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  57 004d 4801D0   		add	rax, rdx
+  58 0050 0FB610   		movzx	edx, BYTE PTR [rax]
+  59 0053 4863CB   		movsx	rcx, ebx
+  60 0056 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  61 005a 4801C8   		add	rax, rcx
+  62 005d 0FB600   		movzx	eax, BYTE PTR [rax]
+  63 0060 38C2     		cmp	dl, al
+  64 0062 7478     		je	.L5
+  24:reverse.c     ****         {
+  25:reverse.c     ****             *(s+loc) ^= *(s + len);
+  65              		.loc 1 25 0
+  66 0064 4963D4   		movsx	rdx, r12d
+  67 0067 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  68 006b 4801C2   		add	rdx, rax
+  69 006e 4963CC   		movsx	rcx, r12d
+  70 0071 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  71 0075 4801C8   		add	rax, rcx
+  72 0078 0FB608   		movzx	ecx, BYTE PTR [rax]
+  73 007b 4863F3   		movsx	rsi, ebx
+  74 007e 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  75 0082 4801F0   		add	rax, rsi
+  76 0085 0FB600   		movzx	eax, BYTE PTR [rax]
+  77 0088 31C8     		xor	eax, ecx
+  78 008a 8802     		mov	BYTE PTR [rdx], al
+  26:reverse.c     ****             *(s + len) ^= *(s+loc);
+  79              		.loc 1 26 0
+  80 008c 4863D3   		movsx	rdx, ebx
+  81 008f 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  82 0093 4801C2   		add	rdx, rax
+  83 0096 4863CB   		movsx	rcx, ebx
+GAS LISTING /tmp/ccVcn7KP.s 			page 3
+
+
+  84 0099 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  85 009d 4801C8   		add	rax, rcx
+  86 00a0 0FB608   		movzx	ecx, BYTE PTR [rax]
+  87 00a3 4963F4   		movsx	rsi, r12d
+  88 00a6 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  89 00aa 4801F0   		add	rax, rsi
+  90 00ad 0FB600   		movzx	eax, BYTE PTR [rax]
+  91 00b0 31C8     		xor	eax, ecx
+  92 00b2 8802     		mov	BYTE PTR [rdx], al
+  27:reverse.c     ****             *(s+loc) ^= *(s + len);
+  93              		.loc 1 27 0
+  94 00b4 4963D4   		movsx	rdx, r12d
+  95 00b7 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  96 00bb 4801C2   		add	rdx, rax
+  97 00be 4963CC   		movsx	rcx, r12d
+  98 00c1 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+  99 00c5 4801C8   		add	rax, rcx
+ 100 00c8 0FB608   		movzx	ecx, BYTE PTR [rax]
+ 101 00cb 4863F3   		movsx	rsi, ebx
+ 102 00ce 488B45D8 		mov	rax, QWORD PTR [rbp-40]
+ 103 00d2 4801F0   		add	rax, rsi
+ 104 00d5 0FB600   		movzx	eax, BYTE PTR [rax]
+ 105 00d8 31C8     		xor	eax, ecx
+ 106 00da 8802     		mov	BYTE PTR [rdx], al
+ 107              	.L5:
+  28:reverse.c     ****             // printf("*(s+loc) = %c *(s + len) = %c\n", *(s+loc), *(s+len));
+  29:reverse.c     ****             // printf("%s\n", s);
+  30:reverse.c     ****         }
+  31:reverse.c     ****         loc++; len--;
+ 108              		.loc 1 31 0
+ 109 00dc 4183C401 		add	r12d, 1
+ 110 00e0 83EB01   		sub	ebx, 1
+ 111              	.L4:
+  20:reverse.c     ****     while ( len != half)
+ 112              		.loc 1 20 0 discriminator 1
+ 113 00e3 3B5DEC   		cmp	ebx, DWORD PTR [rbp-20]
+ 114 00e6 0F855AFF 		jne	.L6
+ 114      FFFF
+  32:reverse.c     **** 
+  33:reverse.c     ****     }
+  34:reverse.c     **** //    s-=len+half;
+  35:reverse.c     **** 
+  36:reverse.c     **** }
+ 115              		.loc 1 36 0
+ 116 00ec 5B       		pop	rbx
+ 117 00ed 415C     		pop	r12
+ 118 00ef 5D       		pop	rbp
+ 119              	.LCFI2:
+ 120              		.cfi_def_cfa 7, 8
+ 121 00f0 C3       		ret
+ 122              		.cfi_endproc
+ 123              	.LFE2:
+ 125              		.section	.rodata
+ 126              	.LC0:
+ 127 0000 2573203D 		.string	"%s ==> "
+ 127      3D3E2000 
+ 128              		.text
+GAS LISTING /tmp/ccVcn7KP.s 			page 4
+
+
+ 129              		.globl	main
+ 131              	main:
+ 132              	.LFB3:
+  37:reverse.c     **** 
+  38:reverse.c     **** int main()
+  39:reverse.c     **** {
+ 133              		.loc 1 39 0
+ 134              		.cfi_startproc
+ 135 00f1 55       		push	rbp
+ 136              	.LCFI3:
+ 137              		.cfi_def_cfa_offset 16
+ 138              		.cfi_offset 6, -16
+ 139 00f2 4889E5   		mov	rbp, rsp
+ 140              	.LCFI4:
+ 141              		.cfi_def_cfa_register 6
+ 142 00f5 4883EC10 		sub	rsp, 16
+ 143              		.loc 1 39 0
+ 144 00f9 64488B04 		mov	rax, QWORD PTR fs:40
+ 144      25280000 
+ 144      00
+ 145 0102 488945F8 		mov	QWORD PTR [rbp-8], rax
+ 146 0106 31C0     		xor	eax, eax
+  40:reverse.c     ****     // char *ps = s;
+  41:reverse.c     ****     char s[] = "abcd";
+ 147              		.loc 1 41 0
+ 148 0108 C745F061 		mov	DWORD PTR [rbp-16], 1684234849
+ 148      626364
+ 149 010f C645F400 		mov	BYTE PTR [rbp-12], 0
+  42:reverse.c     ****     // char n= !(*(s-1)) ? 'n' :'f';
+  43:reverse.c     ****     printf("%s ==> ", s);
+ 150              		.loc 1 43 0
+ 151 0113 488D45F0 		lea	rax, [rbp-16]
+ 152 0117 4889C6   		mov	rsi, rax
+ 153 011a BF000000 		mov	edi, OFFSET FLAT:.LC0
+ 153      00
+ 154 011f B8000000 		mov	eax, 0
+ 154      00
+ 155 0124 E8000000 		call	printf
+ 155      00
+  44:reverse.c     ****     my_reverse(s);
+ 156              		.loc 1 44 0
+ 157 0129 488D45F0 		lea	rax, [rbp-16]
+ 158 012d 4889C7   		mov	rdi, rax
+ 159 0130 E8000000 		call	my_reverse
+ 159      00
+  45:reverse.c     ****     printf("%s\n", s);
+ 160              		.loc 1 45 0
+ 161 0135 488D45F0 		lea	rax, [rbp-16]
+ 162 0139 4889C7   		mov	rdi, rax
+ 163 013c E8000000 		call	puts
+ 163      00
+  46:reverse.c     ****     return 0;
+ 164              		.loc 1 46 0
+ 165 0141 B8000000 		mov	eax, 0
+ 165      00
+  47:reverse.c     **** }...
+ 166              		.loc 1 47 0
+GAS LISTING /tmp/ccVcn7KP.s 			page 5
+
+
+ 167 0146 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+ 168 014a 64483314 		xor	rdx, QWORD PTR fs:40
+ 168      25280000 
+ 168      00
+ 169 0153 7405     		je	.L9
+ 170 0155 E8000000 		call	__stack_chk_fail
+ 170      00
+ 171              	.L9:
+ 172 015a C9       		leave
+ 173              	.LCFI5:
+ 174              		.cfi_def_cfa 7, 8
+ 175 015b C3       		ret
+ 176              		.cfi_endproc
+ 177              	.LFE3:
+ 179              	.Letext0:
+GAS LISTING /tmp/ccVcn7KP.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 reverse.c
+     /tmp/ccVcn7KP.s:7      .text:0000000000000000 my_reverse
+     /tmp/ccVcn7KP.s:131    .text:00000000000000f1 main
+
+UNDEFINED SYMBOLS
+printf
+puts
+__stack_chk_fail

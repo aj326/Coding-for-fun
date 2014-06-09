@@ -1,0 +1,377 @@
+GAS LISTING rvrs_polish_calc.s 			page 1
+
+
+   1              		.file	"rvrs_polish_calc.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.globl	stack
+   6              		.data
+   7              		.align 32
+  10              	stack:
+  11 0000 30       		.byte	48
+  12 0001 00000000 		.zero	99
+  12      00000000 
+  12      00000000 
+  12      00000000 
+  12      00000000 
+  13              		.section	.rodata
+  14              	.LC0:
+  15 0000 73746163 		.string	"stack %p s %p \n"
+  15      6B202570 
+  15      20732025 
+  15      70200A00 
+  16              		.text
+  17              		.globl	calc_tester
+  19              	calc_tester:
+  20              	.LFB2:
+  21              		.file 1 "rvrs_polish_calc.c"
+   1:rvrs_polish_calc.c **** #include <stdio.h>
+   2:rvrs_polish_calc.c **** #include <stdlib.h>
+   3:rvrs_polish_calc.c **** /*reverse polish calc: calculates expressions like this
+   4:rvrs_polish_calc.c **** 4 3 + 2 -
+   5:rvrs_polish_calc.c **** */
+   6:rvrs_polish_calc.c ****  
+   7:rvrs_polish_calc.c **** #define TEST_CASES 1
+   8:rvrs_polish_calc.c **** #define USER_INPUT 2
+   9:rvrs_polish_calc.c **** #define DEBUG 3
+  10:rvrs_polish_calc.c **** #define SIZE 100
+  11:rvrs_polish_calc.c **** //change this once you know how to malloc, relloc, etc.
+  12:rvrs_polish_calc.c **** char stack[SIZE] = {'0'};
+  13:rvrs_polish_calc.c **** // stack[99] = '\0';
+  14:rvrs_polish_calc.c **** float calc_tester(const char s[])
+  15:rvrs_polish_calc.c **** {
+  22              		.loc 1 15 0
+  23              		.cfi_startproc
+  24 0000 55       		push	rbp
+  25              	.LCFI0:
+  26              		.cfi_def_cfa_offset 16
+  27              		.cfi_offset 6, -16
+  28 0001 4889E5   		mov	rbp, rsp
+  29              	.LCFI1:
+  30              		.cfi_def_cfa_register 6
+  31 0004 4883EC20 		sub	rsp, 32
+  32 0008 48897DE8 		mov	QWORD PTR [rbp-24], rdi
+  16:rvrs_polish_calc.c **** 	char* stack_start = stack;
+  33              		.loc 1 16 0
+  34 000c 48C745F8 		mov	QWORD PTR [rbp-8], OFFSET FLAT:stack
+  34      00000000 
+  17:rvrs_polish_calc.c **** 	*stack = 'c';
+  35              		.loc 1 17 0
+GAS LISTING rvrs_polish_calc.s 			page 2
+
+
+  36 0014 C6050000 		mov	BYTE PTR stack[rip], 99
+  36      000063
+  18:rvrs_polish_calc.c **** 	printf("stack %p s %p \n",&stack, &s);
+  37              		.loc 1 18 0
+  38 001b 488D45E8 		lea	rax, [rbp-24]
+  39 001f 4889C2   		mov	rdx, rax
+  40 0022 BE000000 		mov	esi, OFFSET FLAT:stack
+  40      00
+  41 0027 BF000000 		mov	edi, OFFSET FLAT:.LC0
+  41      00
+  42 002c B8000000 		mov	eax, 0
+  42      00
+  43 0031 E8000000 		call	printf
+  43      00
+  19:rvrs_polish_calc.c ****     return -1;
+  44              		.loc 1 19 0
+  45 0036 8B050000 		mov	eax, DWORD PTR .LC1[rip]
+  45      0000
+  20:rvrs_polish_calc.c **** }
+  46              		.loc 1 20 0
+  47 003c 8945E4   		mov	DWORD PTR [rbp-28], eax
+  48 003f F30F1045 		movss	xmm0, DWORD PTR [rbp-28]
+  48      E4
+  49 0044 C9       		leave
+  50              	.LCFI2:
+  51              		.cfi_def_cfa 7, 8
+  52 0045 C3       		ret
+  53              		.cfi_endproc
+  54              	.LFE2:
+  56              		.section	.rodata
+  57              	.LC2:
+  58 0010 54455354 		.string	"TEST_CASES"
+  58      5F434153 
+  58      455300
+  59              	.LC3:
+  60 001b 2573203D 		.string	"%s = 1; result %0.1f\n"
+  60      20313B20 
+  60      72657375 
+  60      6C742025 
+  60      302E3166 
+  61              	.LC4:
+  62 0031 2573203D 		.string	"%s = 2.5; result %0.1f\n"
+  62      20322E35 
+  62      3B207265 
+  62      73756C74 
+  62      2025302E 
+  63              	.LC5:
+  64 0049 2573203D 		.string	"%s = 2; result %0.1f\n"
+  64      20323B20 
+  64      72657375 
+  64      6C742025 
+  64      302E3166 
+  65              	.LC6:
+  66 005f 2573203D 		.string	"%s = 14; result %0.1f\n"
+  66      2031343B 
+  66      20726573 
+  66      756C7420 
+GAS LISTING rvrs_polish_calc.s 			page 3
+
+
+  66      25302E31 
+  67              		.text
+  68              		.globl	main
+  70              	main:
+  71              	.LFB3:
+  21:rvrs_polish_calc.c **** 
+  22:rvrs_polish_calc.c **** int main()
+  23:rvrs_polish_calc.c **** {
+  72              		.loc 1 23 0
+  73              		.cfi_startproc
+  74 0046 55       		push	rbp
+  75              	.LCFI3:
+  76              		.cfi_def_cfa_offset 16
+  77              		.cfi_offset 6, -16
+  78 0047 4889E5   		mov	rbp, rsp
+  79              	.LCFI4:
+  80              		.cfi_def_cfa_register 6
+  81 004a 4881ECA0 		sub	rsp, 160
+  81      000000
+  82              		.loc 1 23 0
+  83 0051 64488B04 		mov	rax, QWORD PTR fs:40
+  83      25280000 
+  83      00
+  84 005a 488945F8 		mov	QWORD PTR [rbp-8], rax
+  85 005e 31C0     		xor	eax, eax
+  86              	.LBB2:
+  24:rvrs_polish_calc.c ****     if (DEBUG & TEST_CASES)
+  25:rvrs_polish_calc.c ****     {
+  26:rvrs_polish_calc.c ****         const char in1[] =  "-4 5 +";
+  87              		.loc 1 26 0
+  88 0060 C78570FF 		mov	DWORD PTR [rbp-144], 891302957
+  88      FFFF2D34 
+  88      2035
+  89 006a 66C78574 		mov	WORD PTR [rbp-140], 11040
+  89      FFFFFF20 
+  89      2B
+  90 0073 C68576FF 		mov	BYTE PTR [rbp-138], 0
+  90      FFFF00
+  27:rvrs_polish_calc.c ****         const char in2[] =  "5 2 /";
+  91              		.loc 1 27 0
+  92 007a C78560FF 		mov	DWORD PTR [rbp-160], 540155957
+  92      FFFF3520 
+  92      3220
+  93 0084 66C78564 		mov	WORD PTR [rbp-156], 47
+  93      FFFFFF2F 
+  93      00
+  28:rvrs_polish_calc.c ****         const char in3[] =  "5 2.5 /";
+  94              		.loc 1 28 0
+  95 008d 48BA3520 		movabs	rdx, 13264736685793333
+  95      322E3520 
+  95      2F00
+  96 0097 48895580 		mov	QWORD PTR [rbp-128], rdx
+  29:rvrs_polish_calc.c ****         const char in4[] =  "5 1 2 + 4 * 3 - +";
+  97              		.loc 1 29 0
+  98 009b 48B83520 		movabs	rax, 2317981832872796213
+  98      31203220 
+  98      2B20
+GAS LISTING rvrs_polish_calc.s 			page 4
+
+
+  99 00a5 48894590 		mov	QWORD PTR [rbp-112], rax
+ 100 00a9 48BA3420 		movabs	rdx, 2318544787120726068
+ 100      2A203320 
+ 100      2D20
+ 101 00b3 48895598 		mov	QWORD PTR [rbp-104], rdx
+ 102 00b7 66C745A0 		mov	WORD PTR [rbp-96], 43
+ 102      2B00
+  30:rvrs_polish_calc.c ****         const char in5[] =  "4 2 5 * + 1 3 2 * + /";
+ 103              		.loc 1 30 0
+ 104 00bd 48B83420 		movabs	rax, 2317700370781052980
+ 104      32203520 
+ 104      2A20
+ 105 00c7 488945B0 		mov	QWORD PTR [rbp-80], rax
+ 106 00cb 48BA2B20 		movabs	rdx, 2319952162004738091
+ 106      31203320 
+ 106      3220
+ 107 00d5 488955B8 		mov	QWORD PTR [rbp-72], rdx
+ 108 00d9 C745C02A 		mov	DWORD PTR [rbp-64], 539697194
+ 108      202B20
+ 109 00e0 66C745C4 		mov	WORD PTR [rbp-60], 47
+ 109      2F00
+  31:rvrs_polish_calc.c ****         const char in6[] =  "12 8 3 * 6 / - 2 + -20.5 ";
+ 110              		.loc 1 31 0
+ 111 00e6 48B83132 		movabs	rax, 3035482362321318449
+ 111      20382033 
+ 111      202A
+ 112 00f0 488945D0 		mov	QWORD PTR [rbp-48], rax
+ 113 00f4 48BA2036 		movabs	rdx, 3611936517403981344
+ 113      202F202D 
+ 113      2032
+ 114 00fe 488955D8 		mov	QWORD PTR [rbp-40], rdx
+ 115 0102 48B8202B 		movabs	rax, 3832053325002451744
+ 115      202D3230 
+ 115      2E35
+ 116 010c 488945E0 		mov	QWORD PTR [rbp-32], rax
+ 117 0110 66C745E8 		mov	WORD PTR [rbp-24], 32
+ 117      2000
+  32:rvrs_polish_calc.c ****         printf("TEST_CASES\n");
+ 118              		.loc 1 32 0
+ 119 0116 BF000000 		mov	edi, OFFSET FLAT:.LC2
+ 119      00
+ 120 011b E8000000 		call	puts
+ 120      00
+  33:rvrs_polish_calc.c ****         printf("%s = 1; result %0.1f\n", in1, calc_tester(in1));
+ 121              		.loc 1 33 0
+ 122 0120 488D8570 		lea	rax, [rbp-144]
+ 122      FFFFFF
+ 123 0127 4889C7   		mov	rdi, rax
+ 124 012a E8000000 		call	calc_tester
+ 124      00
+ 125 012f 0F14C0   		unpcklps	xmm0, xmm0
+ 126 0132 0F5AC0   		cvtps2pd	xmm0, xmm0
+ 127 0135 488D8570 		lea	rax, [rbp-144]
+ 127      FFFFFF
+ 128 013c 4889C6   		mov	rsi, rax
+ 129 013f BF000000 		mov	edi, OFFSET FLAT:.LC3
+ 129      00
+GAS LISTING rvrs_polish_calc.s 			page 5
+
+
+ 130 0144 B8010000 		mov	eax, 1
+ 130      00
+ 131 0149 E8000000 		call	printf
+ 131      00
+  34:rvrs_polish_calc.c ****         printf("%s = 2.5; result %0.1f\n", in2, calc_tester(in2));
+ 132              		.loc 1 34 0
+ 133 014e 488D8560 		lea	rax, [rbp-160]
+ 133      FFFFFF
+ 134 0155 4889C7   		mov	rdi, rax
+ 135 0158 E8000000 		call	calc_tester
+ 135      00
+ 136 015d 0F14C0   		unpcklps	xmm0, xmm0
+ 137 0160 0F5AC0   		cvtps2pd	xmm0, xmm0
+ 138 0163 488D8560 		lea	rax, [rbp-160]
+ 138      FFFFFF
+ 139 016a 4889C6   		mov	rsi, rax
+ 140 016d BF000000 		mov	edi, OFFSET FLAT:.LC4
+ 140      00
+ 141 0172 B8010000 		mov	eax, 1
+ 141      00
+ 142 0177 E8000000 		call	printf
+ 142      00
+  35:rvrs_polish_calc.c ****         printf("%s = 2; result %0.1f\n", in3, calc_tester(in3));
+ 143              		.loc 1 35 0
+ 144 017c 488D4580 		lea	rax, [rbp-128]
+ 145 0180 4889C7   		mov	rdi, rax
+ 146 0183 E8000000 		call	calc_tester
+ 146      00
+ 147 0188 0F14C0   		unpcklps	xmm0, xmm0
+ 148 018b 0F5AC0   		cvtps2pd	xmm0, xmm0
+ 149 018e 488D4580 		lea	rax, [rbp-128]
+ 150 0192 4889C6   		mov	rsi, rax
+ 151 0195 BF000000 		mov	edi, OFFSET FLAT:.LC5
+ 151      00
+ 152 019a B8010000 		mov	eax, 1
+ 152      00
+ 153 019f E8000000 		call	printf
+ 153      00
+  36:rvrs_polish_calc.c ****         printf("%s = 14; result %0.1f\n", in4, calc_tester(in4));
+ 154              		.loc 1 36 0
+ 155 01a4 488D4590 		lea	rax, [rbp-112]
+ 156 01a8 4889C7   		mov	rdi, rax
+ 157 01ab E8000000 		call	calc_tester
+ 157      00
+ 158 01b0 0F14C0   		unpcklps	xmm0, xmm0
+ 159 01b3 0F5AC0   		cvtps2pd	xmm0, xmm0
+ 160 01b6 488D4590 		lea	rax, [rbp-112]
+ 161 01ba 4889C6   		mov	rsi, rax
+ 162 01bd BF000000 		mov	edi, OFFSET FLAT:.LC6
+ 162      00
+ 163 01c2 B8010000 		mov	eax, 1
+ 163      00
+ 164 01c7 E8000000 		call	printf
+ 164      00
+  37:rvrs_polish_calc.c ****         printf("%s = 2; result %0.1f\n", in5, calc_tester(in5));
+ 165              		.loc 1 37 0
+ 166 01cc 488D45B0 		lea	rax, [rbp-80]
+GAS LISTING rvrs_polish_calc.s 			page 6
+
+
+ 167 01d0 4889C7   		mov	rdi, rax
+ 168 01d3 E8000000 		call	calc_tester
+ 168      00
+ 169 01d8 0F14C0   		unpcklps	xmm0, xmm0
+ 170 01db 0F5AC0   		cvtps2pd	xmm0, xmm0
+ 171 01de 488D45B0 		lea	rax, [rbp-80]
+ 172 01e2 4889C6   		mov	rsi, rax
+ 173 01e5 BF000000 		mov	edi, OFFSET FLAT:.LC5
+ 173      00
+ 174 01ea B8010000 		mov	eax, 1
+ 174      00
+ 175 01ef E8000000 		call	printf
+ 175      00
+  38:rvrs_polish_calc.c ****         printf("%s = 2; result %0.1f\n", in6, calc_tester(in6));
+ 176              		.loc 1 38 0
+ 177 01f4 488D45D0 		lea	rax, [rbp-48]
+ 178 01f8 4889C7   		mov	rdi, rax
+ 179 01fb E8000000 		call	calc_tester
+ 179      00
+ 180 0200 0F14C0   		unpcklps	xmm0, xmm0
+ 181 0203 0F5AC0   		cvtps2pd	xmm0, xmm0
+ 182 0206 488D45D0 		lea	rax, [rbp-48]
+ 183 020a 4889C6   		mov	rsi, rax
+ 184 020d BF000000 		mov	edi, OFFSET FLAT:.LC5
+ 184      00
+ 185 0212 B8010000 		mov	eax, 1
+ 185      00
+ 186 0217 E8000000 		call	printf
+ 186      00
+ 187              	.LBE2:
+  39:rvrs_polish_calc.c **** 
+  40:rvrs_polish_calc.c ****     }
+  41:rvrs_polish_calc.c ****     return 0;
+ 188              		.loc 1 41 0
+ 189 021c B8000000 		mov	eax, 0
+ 189      00
+  42:rvrs_polish_calc.c **** }...
+ 190              		.loc 1 42 0
+ 191 0221 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+ 192 0225 64483314 		xor	rdx, QWORD PTR fs:40
+ 192      25280000 
+ 192      00
+ 193 022e 7405     		je	.L5
+ 194 0230 E8000000 		call	__stack_chk_fail
+ 194      00
+ 195              	.L5:
+ 196 0235 C9       		leave
+ 197              	.LCFI5:
+ 198              		.cfi_def_cfa 7, 8
+ 199 0236 C3       		ret
+ 200              		.cfi_endproc
+ 201              	.LFE3:
+ 203              		.section	.rodata
+ 204 0076 0000     		.align 4
+ 205              	.LC1:
+ 206 0078 000080BF 		.long	3212836864
+ 207              		.text
+GAS LISTING rvrs_polish_calc.s 			page 7
+
+
+ 208              	.Letext0:
+GAS LISTING rvrs_polish_calc.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 rvrs_polish_calc.c
+  rvrs_polish_calc.s:10     .data:0000000000000000 stack
+  rvrs_polish_calc.s:19     .text:0000000000000000 calc_tester
+  rvrs_polish_calc.s:70     .text:0000000000000046 main
+
+UNDEFINED SYMBOLS
+printf
+puts
+__stack_chk_fail

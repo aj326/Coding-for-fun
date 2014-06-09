@@ -1,0 +1,104 @@
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+stepping	: 10
+cpu MHz		: 3157.951
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fdiv_bug	: no
+hlt_bug		: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm sse4_1 xsave lahf_lm tpr_shadow vnmi flexpriority
+bogomips	: 6315.90
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 23
+model name	: Intel(R) Core(TM)2 Duo CPU     E8500  @ 3.16GHz
+stepping	: 10
+cpu MHz		: 3157.951
+cache size	: 6144 KB
+physical id	: 0
+siblings	: 2
+core id		: 1
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fdiv_bug	: no
+hlt_bug		: no
+f00f_bug	: no
+coma_bug	: no
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe lm constant_tsc arch_perfmon pebs bts aperfmperf pni dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm sse4_1 xsave lahf_lm tpr_shadow vnmi flexpriority
+bogomips	: 6316.62
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+MEMORY INFORMATION
+MemTotal:        3353376 kB
+MemFree:          306232 kB
+Buffers:          449220 kB
+Cached:          2081864 kB
+SwapCached:            0 kB
+Active:           870900 kB
+Inactive:        1926860 kB
+Active(anon):     230452 kB
+Inactive(anon):    51544 kB
+Active(file):     640448 kB
+Inactive(file):  1875316 kB
+Unevictable:        1832 kB
+Mlocked:            1832 kB
+HighTotal:       2496524 kB
+HighFree:         158752 kB
+LowTotal:         856852 kB
+LowFree:          147480 kB
+SwapTotal:       2011128 kB
+SwapFree:        2011128 kB
+Dirty:                20 kB
+Writeback:             0 kB
+AnonPages:        268508 kB
+Mapped:           107196 kB
+Shmem:             13760 kB
+Slab:             193828 kB
+SReclaimable:     181980 kB
+SUnreclaim:        11848 kB
+KernelStack:        2504 kB
+PageTables:         6108 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     3687816 kB
+Committed_AS:    1167620 kB
+VmallocTotal:     122880 kB
+VmallocUsed:       62784 kB
+VmallocChunk:      52732 kB
+HardwareCorrupted:     0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       4096 kB
+DirectMap4k:      856056 kB
+DirectMap4M:       53248 kB

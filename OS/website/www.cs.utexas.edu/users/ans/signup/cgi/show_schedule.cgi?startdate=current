@@ -1,0 +1,74 @@
+<html><head><title>Signup Schedule</title></head><body bgcolor="#ffffff" text="#000000">
+<center><p><font color="#b15729" size="+2"><b>Stack Check Signup Schedule</b><br></font></p><tr><td valign="middle" align="center"><font face="Arial,Helvetica,sans-serif" size="2">Meetings are in GDC 3.302 unless otherwise specified<br>All times are Central Time.</font></td></tr><p><tr><td valign="middle" align="center"><font face="Arial,Helvetica,sans-serif" size="2">Please list all group members (first and last names) in the appointment slot.<br>
+Indicate those who will be present (at least 2 must be present) with an '*'.<br>
+After each name, include the member's <b>CS LOGIN</b> in parentheses (e.g. Alison Norman (ans)).<br>
+<br>
+<br>
+If you sign up for an earlier time and your stack does not work properly, then you may return and sign up for any remaining available time---but you may not use slip days. <br>
+If you choose to sign up for a second time, please email Alison (ans@cs) indicating that you have done so.
+<br>
+<br>
+Initial sign ups must be completed by Saturday, 3/1, at 5pm.  
+<br>
+If you are signing up after that time, complete your sign up and then contact Alison (ans@cs) for permission and explain why you were unable to sign up earlier.
+</font></td></tr></table><br>&nbsp;<br></p></center><form method="POST" action="update_schedule.cgi"><input type="hidden" name="startdate" value="current"><input type="hidden" name="oldtimestamp" value="1393955917"><center><b><i>For Monday, March 03, 2014</i></b></center><center><p><textarea rows="18" cols="56" name="20140303"> 3:30 pm *Kevin Byers (kevinb), *Tomas Rodriguez (utomas), *Luis Delgado (ldelgado), *Dilnur Yuldashev (dilnur92)
+ 3:45 pm *Katherine Ensign (ensign), *Ryan Niemann (ryan76), *Merrill Davis (davismc), *Kayvon Farzaneh (kayvon)
+ 4:00 pm *Ilshat Ahatov (ilshat), *Adolfo Muller (amuller), *David Aguirre (da9492), Jenna Saleh (jenna900)
+ 4:15 pm *Priyanka Sarkar (ps24225), *Angela Hsu (ahsu), Olivia Lin () 
+ 4:30 pm *Chuying Huang (hchuying), *Jacob Kovar (jkovar)
+ 4:45 pm *Amanda Liem (aliem), *Gerardo Gamboa (jergamb), *Sydney Mercier (sgm645)
+ 5:00 pm *Robert Lynch (rmlynch), *Alise Isaksen (aisaksen)
+ 5:15 pm *Samantha Cooper (skc853), *Calvin Aisenbrey (cja769), *Dustin Stone (dstone94), *Jason Ngo (jasonngo)
+ 5:30 pm *Andrew Kogler (akogler), *Taylor Gregston (teg282), *Robert Gehring (rjg23858), *Brian Jenkins (baj645)
+ 5:30 pm *Brittany Weinert (bweinert), *Nathan Giles (ng697)
+ 5:45 pm *Ahmet Celik (ahmetclk), *Xavier Beynon (xavier), *Maximilian Brown (brownmt6)
+ 5:45 pm *Megan Avery (meg1022), *Briana Gray (briana21), *Alex Fortin (afortin), *Chris Pelton (cjpst12)
+ 6:00 pm *Matthew Diamond (medman82), *Jin Kim (jhk924), *Alexandra Martinez (amtz7), *Jesus Galvan (jesus92)
+ 6:00 pm Brady Miller (bratxdy), *Nada Ismail (nismail), *Siena McFetridge (scm2539), *Paige Hinkle (phinkle)
+ 6:15 pm *Zane Urbanski (urbanski), *Andrew Vohl (acv563), Joojay Huyn (jh54287), Thien Vo (thv92)
+ 6:15 pm * Stephen Hurd (hurdsj), * Matt Couture (mattsqui)
+ 6:30 pm * David Parker (dp24559), *Chris Metcalf (cmetcalf), Paul Strong (pstrong)
+ 6:30 pm *Hongbing Cai (hc8453), *Yun Wen Chen (dc27863), *Perry Feng (pf4736)
+ 6:45 pm *Zhenyu Zhu (zhenyu), *Amar Lakhian (lakhian), *Drew Zoellner (drew2222)
+ 6:45 pm *Philip May (pmay) *Hunter Degroot (hd7), Conner Collins (cmc4463)
+ 7:00 pm *Denys Baskov (dbaskov), *Eric Nguyen (tungoo7), *Steven Zvonek (skz94)
+ 7:00 pm *Lakshmi Prakash (lprakash), *Marek Bejda (dotcz12), Clayton Gould (cegould), Travis Webb (travis86)
+ 7:15 pm *Marguerite West-Driga (mwestdri), *Ellen Wiberg (lnswe)
+ 7:15 pm *Brett Kercher (bkercher), *Newman Willis(nwmaan)
+ 7:30 pm *Olga Saprycheva (osaprych), *Sherley Jones (sj8346), *Mathew Norris (Mnorris)
+ 7:30 pm *Daniel Barton Durbin (majisto), *Brent Hays (bah2569), *Hector Rene Trevino (rtrevino)
+ 7:45 pm *Xingrong Wu (phoebewu)*Di Liu(dliu), *Ka Hei Chan(kc32393), *Chan-Tang Hsu (hc9757)
+ 7:45 pm *Julio Mendez (julio94) *Michael Chin (micdchin) Zhen Guang Wu (zw2898) William Zhong (williamz)
+ 8:00 pm *Niraj Patel (niraj), *Arit Paul (apaul)
+ 8:15 pm *Steven Zhang (syz), *Trevor Thackston (ttt733)
+</textarea></p></center><center><b><i>For Tuesday, March 04, 2014</i></b></center><center><p><textarea rows="18" cols="56" name="20140304">11:00 am*Jacob Bobb(jbobb15), *Alex Landaverde(alexland)
+11:15 am
+11:30 am *Brandon Salch (bsalch), *Alan Dickey (amd2798)
+11:45 am
+ 2:30 pm *Andres Avila (avila1), *Bruno Veiga (bsv259), *Charlina Hung (charlina)
+ 2:45 pm *Sage Moore(sage950), *Eric Lane(elane), *Hanah Luong(hanahx3)
+ 3:00 pm *Rita Pham (rpham), *Nathaniel Ballinger (nb8384), *Julian Trust (jtripled)
+ 3:00 pm *Ruben Baeza(rb27735), *Siva Mullapudi(sivakom)
+ 3:15 pm *Kim Yu Ng (kimyu92), *Prithvi Shahi (pshahi92), Eros Smith (eros), Abraham Munoz (abemunoz)
+ 3:15 pm *Li Cai(licai),*Tamara Warton(twarton), *Dean Marino(dhm549)
+ 3:30 pm *Devyn Moore (devynm), *Ryan Freeman (rfreeman)
+ 3:30 pm *Jesus Hernandez (jh6779), *Sonny Marton (smartone), Adam Camac (adam613), David Hummer (dmh2879) 
+ 3:45 pm *Roman Hernandez (rhern), *Tehreem Syed (fatima), Aaron Dishman (adishman), *Danielle Wallace (dwallace)
+ 3:45 pm *Yun Jang (ysj238), *Connor Lirot (ccl676), Kyeong Park (ksp499), Stephen Mayne (fill in later)
+ 4:00 pm *Kyle Nicola (knicola), *Rhain Kaman (rkaman)
+ 4:00 pm *Guillermo Terrazas (gat489), *Irvin Gonzalez (ig3885), Noelle Hall (nrh553)
+ 4:15 pm *Mikkel C. Kim (mck782), *Jungmo Ku (suhojm)
+ 4:15 pm *Andy Ehlert (andy), *Steven Strybos (steven17), *Jerry Dodd (jtdodd), *Zachary Peters (azeekio)
+ 4:30 pm *Jaclyn Eckert (jme2328), Juan Villamizar (jpv426)
+ 4:30 pm *Ben Ridings(bridings), *Bastion Fennell(bastionf)
+ 4:45 pm *Isabella Bhardwaj (isabella), *Stephen Arnett, Amanda Steinwedel
+ 4:45 pm Min Bi (minbi), *Axel Ismirlian (axel), *Paul Bae (pbb388), *Eric Symmank (symmanke)
+ 5:00 pm *Phillip Pham (pqpham90), *Surakij Areenukul (ssa673), Andy Fan (andyfan)
+ 5:15 pm *Charles Rory Trankler (trankler), *Tim Sherlock (tsherloc)
+ 6:00 pm *Matt Couture(mattsqui), *Stephen Hurd(hurdsj)
+ 6:15 pm *Steven Zhang (syz), *Trevor Thackston 
+ 6:30 pm *Briana Evans(briana93), *Jared Hettinger(jaredh), *Chanhee Park(sparkhee), *Brian Lau(brian336)
+ 6:45 pm *Kaitlin Decker (kad869), *Nelson Cheng (nc7559)
+ 7:00 pm
+ 7:15 pm
+</textarea></p></center><center><p><input type="submit" name="submit" value="submit">&nbsp;<input type="reset" name="reset" value="reset"></p></center></form></body></html>

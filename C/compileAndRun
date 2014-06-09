@@ -1,0 +1,96 @@
+#!/usr/bin/perl
+##################################
+# Ahmed AlJehairan
+# ahmed.jehairan@utexas.edu
+# GitHub: https://github.com/aj326
+##################################
+# Project: Compile and run c code (v1.01)
+# Description: Compiles and runs c code for you; produces assembly file, object dump, assembly matched with c code file, and function calls file
+# Usage: run "./compileAndRun a.c b.c .... [-v]" in the directory that has your c files. if multiple .c files, it would default to the first one to
+# name the executable.
+# Options: -v: prints everything to stdout too
+#######################
+use v5.10;
+use Data::Dumper;
+use autodie;
+use strict;
+use warnings;
+#######################
+#Variables:
+###########
+my $out;
+my $ass;
+my $dump;
+my $output_name;
+my $verbose = 0;
+my $std_out;
+#######################
+#Subroutines:
+#############
+
+#######################
+#I/O
+####
+die "-v goes after filenames! (@ARGV)" if ( $ARGV[0] eq "-v" );
+if ( scalar @ARGV == 1 ) {
+    $output_name = substr( $ARGV[0], 0, -2 );
+
+    # say "in == 1 case; output = $output_name";
+}
+if ( scalar @ARGV >= 2 and $ARGV[1] eq "-v" ) {
+    $verbose = 1;
+
+    # $output_name = substr($ARGV[0], 0, -2);
+    # say "before splice (@ARGV)";
+    splice( @ARGV, 1, 1 );
+
+    # say "after splice (@ARGV)";
+    # $output_name = pop(@ARGV);
+    # say $output_name;
+    # say "in -v and >= 2 case; ARGV = (@ARGV)";
+}
+if ( !$output_name ) {
+    $output_name
+        = ( substr( $ARGV[ scalar @ARGV - 1 ], -2 ) ne ".c" )
+        ? pop(@ARGV)
+        : substr( $ARGV[0], 0, -2 );
+
+    # say "in haven't gotten an output_name yet; output = $output_name";
+}
+
+# say "what's going on $output_name?";
+# say (@ARGV);
+# my $output = qx/script.sh --option/;
+# say $output_name;
+$out
+    = qx/gcc -g -O2 -Wall -Wa,-a,-ad -masm=intel -save-temps @ARGV -o $output_name > $output_name.lst/;
+$std_out = qx/ \.\/$output_name > $output_name\.out/;
+# $ass = qx/gcc -c -g -Wall -O0 -Wa,-a,-ad -masm=intel @ARGV/;
+# $s_file = qx/gcc -O0 -S -c @ARGV/;
+$dump = qx/objdump -d --disassembler-options=intel $output_name/;
+{
+    open( DUMP, ">$output_name.dmp" );
+    print DUMP $dump;
+    close(DUMP);
+}
+print $std_out;
+if ($verbose) {
+    say "============ASSEMBLY==============";
+    {
+        open( ASSEMBLY, "<$output_name.s" );
+        while (<ASSEMBLY>) {
+            print;
+        }
+        close(ASSEMBLY);
+    }
+    say "============ASS + C==============";
+    {
+        open( LST, "<$output_name.lst" );
+        while (<LST>) {
+            print;
+        }
+        close(LST);
+    }
+    say "============OBJDUMP===============";
+    print $dump;
+}

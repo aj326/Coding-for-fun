@@ -1,0 +1,415 @@
+GAS LISTING /tmp/cc7vwgms.s 			page 1
+
+
+   1              		.file	"strindex.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.globl	strindex
+   7              	strindex:
+   8              	.LFB0:
+   9              		.file 1 "strindex.c"
+   1:strindex.c    **** #include <stdio.h>
+   2:strindex.c    **** 
+   3:strindex.c    **** /* strindex: return index of t in s, -1 if none */
+   4:strindex.c    **** int strindex(char s[], char t[])
+   5:strindex.c    **** {
+  10              		.loc 1 5 0
+  11              		.cfi_startproc
+  12 0000 55       		push	rbp
+  13              	.LCFI0:
+  14              		.cfi_def_cfa_offset 16
+  15              		.cfi_offset 6, -16
+  16 0001 4889E5   		mov	rbp, rsp
+  17              	.LCFI1:
+  18              		.cfi_def_cfa_register 6
+  19 0004 48897DE8 		mov	QWORD PTR [rbp-24], rdi
+  20 0008 488975E0 		mov	QWORD PTR [rbp-32], rsi
+   6:strindex.c    ****     int i;
+   7:strindex.c    ****     int ts, ss;
+   8:strindex.c    ****     for (ss = i = 0; *s; s++, ++ss, ++i)
+  21              		.loc 1 8 0
+  22 000c C745F400 		mov	DWORD PTR [rbp-12], 0
+  22      000000
+  23 0013 8B45F4   		mov	eax, DWORD PTR [rbp-12]
+  24 0016 8945FC   		mov	DWORD PTR [rbp-4], eax
+  25 0019 E9840000 		jmp	.L2
+  25      00
+  26              	.L9:
+   9:strindex.c    ****     {
+  10:strindex.c    ****         for (ts = 0; *t && (*t != *s); t++, ++ts);
+  27              		.loc 1 10 0
+  28 001e C745F800 		mov	DWORD PTR [rbp-8], 0
+  28      000000
+  29 0025 EB09     		jmp	.L3
+  30              	.L5:
+  31              		.loc 1 10 0 is_stmt 0 discriminator 1
+  32 0027 488345E0 		add	QWORD PTR [rbp-32], 1
+  32      01
+  33 002c 8345F801 		add	DWORD PTR [rbp-8], 1
+  34              	.L3:
+  35 0030 488B45E0 		mov	rax, QWORD PTR [rbp-32]
+  36 0034 0FB600   		movzx	eax, BYTE PTR [rax]
+  37 0037 84C0     		test	al, al
+  38 0039 7412     		je	.L4
+  39              		.loc 1 10 0 discriminator 2
+  40 003b 488B45E0 		mov	rax, QWORD PTR [rbp-32]
+  41 003f 0FB610   		movzx	edx, BYTE PTR [rax]
+  42 0042 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  43 0046 0FB600   		movzx	eax, BYTE PTR [rax]
+  44 0049 38C2     		cmp	dl, al
+GAS LISTING /tmp/cc7vwgms.s 			page 2
+
+
+  45 004b 75DA     		jne	.L5
+  46              	.L4:
+  11:strindex.c    ****         // printf("i = %d after for loop; s = %c, *t = %c\n", i, *s,*t);
+  12:strindex.c    ****         if (*t == '\0')
+  47              		.loc 1 12 0 is_stmt 1
+  48 004d 488B45E0 		mov	rax, QWORD PTR [rbp-32]
+  49 0051 0FB600   		movzx	eax, BYTE PTR [rax]
+  50 0054 84C0     		test	al, al
+  51 0056 750E     		jne	.L6
+  13:strindex.c    ****         {
+  14:strindex.c    ****             // printf("ts:%d\n",ts);                // ts-;
+  15:strindex.c    ****             // printf("t ended: %c\n",*t);
+  16:strindex.c    ****             t -= ts;
+  52              		.loc 1 16 0
+  53 0058 8B45F8   		mov	eax, DWORD PTR [rbp-8]
+  54 005b 4898     		cdqe
+  55 005d 48F7D8   		neg	rax
+  56 0060 480145E0 		add	QWORD PTR [rbp-32], rax
+  57 0064 EB2F     		jmp	.L7
+  58              	.L6:
+  17:strindex.c    ****             // printf("FIXING POINTER t ended: %c\n",*t);
+  18:strindex.c    ****         }
+  19:strindex.c    ****         else if (*t == *s)
+  59              		.loc 1 19 0
+  60 0066 488B45E0 		mov	rax, QWORD PTR [rbp-32]
+  61 006a 0FB610   		movzx	edx, BYTE PTR [rax]
+  62 006d 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  63 0071 0FB600   		movzx	eax, BYTE PTR [rax]
+  64 0074 38C2     		cmp	dl, al
+  65 0076 751D     		jne	.L7
+  20:strindex.c    ****         {
+  21:strindex.c    ****             // printf("found match, i: %d\n",i);
+  22:strindex.c    ****             t -= ts; s -= ss;
+  66              		.loc 1 22 0
+  67 0078 8B45F8   		mov	eax, DWORD PTR [rbp-8]
+  68 007b 4898     		cdqe
+  69 007d 48F7D8   		neg	rax
+  70 0080 480145E0 		add	QWORD PTR [rbp-32], rax
+  71 0084 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  72 0087 4898     		cdqe
+  73 0089 48F7D8   		neg	rax
+  74 008c 480145E8 		add	QWORD PTR [rbp-24], rax
+  23:strindex.c    ****             return i;
+  75              		.loc 1 23 0
+  76 0090 8B45F4   		mov	eax, DWORD PTR [rbp-12]
+  77 0093 EB31     		jmp	.L8
+  78              	.L7:
+   8:strindex.c    ****     for (ss = i = 0; *s; s++, ++ss, ++i)
+  79              		.loc 1 8 0
+  80 0095 488345E8 		add	QWORD PTR [rbp-24], 1
+  80      01
+  81 009a 8345FC01 		add	DWORD PTR [rbp-4], 1
+  82 009e 8345F401 		add	DWORD PTR [rbp-12], 1
+  83              	.L2:
+   8:strindex.c    ****     for (ss = i = 0; *s; s++, ++ss, ++i)
+  84              		.loc 1 8 0 is_stmt 0 discriminator 1
+  85 00a2 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+GAS LISTING /tmp/cc7vwgms.s 			page 3
+
+
+  86 00a6 0FB600   		movzx	eax, BYTE PTR [rax]
+  87 00a9 84C0     		test	al, al
+  88 00ab 0F856DFF 		jne	.L9
+  88      FFFF
+  24:strindex.c    ****         }
+  25:strindex.c    **** 
+  26:strindex.c    ****     }
+  27:strindex.c    ****     ss -= 2;
+  89              		.loc 1 27 0 is_stmt 1
+  90 00b1 836DFC02 		sub	DWORD PTR [rbp-4], 2
+  28:strindex.c    ****     s -= ss;
+  91              		.loc 1 28 0
+  92 00b5 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  93 00b8 4898     		cdqe
+  94 00ba 48F7D8   		neg	rax
+  95 00bd 480145E8 		add	QWORD PTR [rbp-24], rax
+  29:strindex.c    ****     return -1;
+  96              		.loc 1 29 0
+  97 00c1 B8FFFFFF 		mov	eax, -1
+  97      FF
+  98              	.L8:
+  30:strindex.c    **** 
+  31:strindex.c    **** }
+  99              		.loc 1 31 0
+ 100 00c6 5D       		pop	rbp
+ 101              	.LCFI2:
+ 102              		.cfi_def_cfa 7, 8
+ 103 00c7 C3       		ret
+ 104              		.cfi_endproc
+ 105              	.LFE0:
+ 107              		.section	.rodata
+ 108              	.LC1:
+ 109 0000 73747269 		.string	"strindex(%s,%s) = %d\n"
+ 109      6E646578 
+ 109      2825732C 
+ 109      25732920 
+ 109      3D202564 
+ 110              	.LC2:
+ 111 0016 73313A25 		.string	"s1:%s, s2:%s,s3:%s,s4:%s\n"
+ 111      732C2073 
+ 111      323A2573 
+ 111      2C73333A 
+ 111      25732C73 
+ 112              		.align 8
+ 113              	.LC0:
+ 114 0030 7661646B 		.string	"vadkgjdglhfdagihoighaoighadsoifhoighoighoidsaghoidsaghoidsaghoidsahgoidsahgoidsahgoidsahg
+ 114      676A6467 
+ 114      6C686664 
+ 114      61676968 
+ 114      6F696768 
+ 115              		.text
+ 116              		.globl	main
+ 118              	main:
+ 119              	.LFB1:
+  32:strindex.c    **** int main()
+  33:strindex.c    **** {
+ 120              		.loc 1 33 0
+GAS LISTING /tmp/cc7vwgms.s 			page 4
+
+
+ 121              		.cfi_startproc
+ 122 00c8 55       		push	rbp
+ 123              	.LCFI3:
+ 124              		.cfi_def_cfa_offset 16
+ 125              		.cfi_offset 6, -16
+ 126 00c9 4889E5   		mov	rbp, rsp
+ 127              	.LCFI4:
+ 128              		.cfi_def_cfa_register 6
+ 129 00cc 4881EC30 		sub	rsp, 304
+ 129      010000
+ 130              		.loc 1 33 0
+ 131 00d3 64488B04 		mov	rax, QWORD PTR fs:40
+ 131      25280000 
+ 131      00
+ 132 00dc 488945F8 		mov	QWORD PTR [rbp-8], rax
+ 133 00e0 31C0     		xor	eax, eax
+  34:strindex.c    ****     char s1[] = "abcd";
+ 134              		.loc 1 34 0
+ 135 00e2 C785F0FE 		mov	DWORD PTR [rbp-272], 1684234849
+ 135      FFFF6162 
+ 135      6364
+ 136 00ec C685F4FE 		mov	BYTE PTR [rbp-268], 0
+ 136      FFFF00
+  35:strindex.c    ****     char s2[] = "bc";
+ 137              		.loc 1 35 0
+ 138 00f3 66C785D0 		mov	WORD PTR [rbp-304], 25442
+ 138      FEFFFF62 
+ 138      63
+ 139 00fc C685D2FE 		mov	BYTE PTR [rbp-302], 0
+ 139      FFFF00
+  36:strindex.c    ****     char s3[] = "fe";
+ 140              		.loc 1 36 0
+ 141 0103 66C785E0 		mov	WORD PTR [rbp-288], 25958
+ 141      FEFFFF66 
+ 141      65
+ 142 010c C685E2FE 		mov	BYTE PTR [rbp-286], 0
+ 142      FFFF00
+  37:strindex.c    ****     char s4[] = "vvvvvvvvvvvvvvvvvvvvvvvvvvabaa";
+ 143              		.loc 1 37 0
+ 144 0113 48BA7676 		movabs	rdx, 8536140394893047414
+ 144      76767676 
+ 144      7676
+ 145 011d 48899500 		mov	QWORD PTR [rbp-256], rdx
+ 145      FFFFFF
+ 146 0124 48BE7676 		movabs	rsi, 8536140394893047414
+ 146      76767676 
+ 146      7676
+ 147 012e 4889B508 		mov	QWORD PTR [rbp-248], rsi
+ 147      FFFFFF
+ 148 0135 48BF7676 		movabs	rdi, 8536140394893047414
+ 148      76767676 
+ 148      7676
+ 149 013f 4889BD10 		mov	QWORD PTR [rbp-240], rdi
+ 149      FFFFFF
+ 150 0146 C78518FF 		mov	DWORD PTR [rbp-232], 1650554486
+ 150      FFFF7676 
+ 150      6162
+GAS LISTING /tmp/cc7vwgms.s 			page 5
+
+
+ 151 0150 66C7851C 		mov	WORD PTR [rbp-228], 24929
+ 151      FFFFFF61 
+ 151      61
+ 152 0159 C6851EFF 		mov	BYTE PTR [rbp-226], 0
+ 152      FFFF00
+  38:strindex.c    ****     char s5[] = "vadkgjdglhfdagihoighaoighadsoifhoighoighoidsaghoidsaghoidsaghoidsahgoidsahgoidsahg
+ 153              		.loc 1 38 0
+ 154 0160 488D9520 		lea	rdx, [rbp-224]
+ 154      FFFFFF
+ 155 0167 B8000000 		mov	eax, OFFSET FLAT:.LC0
+ 155      00
+ 156 016c B9190000 		mov	ecx, 25
+ 156      00
+ 157 0171 4889D7   		mov	rdi, rdx
+ 158 0174 4889C6   		mov	rsi, rax
+ 159 0177 F348A5   		rep movsq
+ 160 017a 4889F0   		mov	rax, rsi
+ 161 017d 4889FA   		mov	rdx, rdi
+ 162 0180 0FB708   		movzx	ecx, WORD PTR [rax]
+ 163 0183 66890A   		mov	WORD PTR [rdx], cx
+ 164 0186 4883C202 		add	rdx, 2
+ 165 018a 4883C002 		add	rax, 2
+ 166 018e 0FB608   		movzx	ecx, BYTE PTR [rax]
+ 167 0191 880A     		mov	BYTE PTR [rdx], cl
+ 168 0193 4883C201 		add	rdx, 1
+ 169 0197 4883C001 		add	rax, 1
+  39:strindex.c    **** 
+  40:strindex.c    ****     printf("strindex(%s,%s) = %d\n", s1, s2, strindex(s1, s2));
+ 170              		.loc 1 40 0
+ 171 019b 488D95D0 		lea	rdx, [rbp-304]
+ 171      FEFFFF
+ 172 01a2 488D85F0 		lea	rax, [rbp-272]
+ 172      FEFFFF
+ 173 01a9 4889D6   		mov	rsi, rdx
+ 174 01ac 4889C7   		mov	rdi, rax
+ 175 01af E8000000 		call	strindex
+ 175      00
+ 176 01b4 89C1     		mov	ecx, eax
+ 177 01b6 488D95D0 		lea	rdx, [rbp-304]
+ 177      FEFFFF
+ 178 01bd 488D85F0 		lea	rax, [rbp-272]
+ 178      FEFFFF
+ 179 01c4 4889C6   		mov	rsi, rax
+ 180 01c7 BF000000 		mov	edi, OFFSET FLAT:.LC1
+ 180      00
+ 181 01cc B8000000 		mov	eax, 0
+ 181      00
+ 182 01d1 E8000000 		call	printf
+ 182      00
+  41:strindex.c    ****     printf("strindex(%s,%s) = %d\n", s1, s3, strindex(s1, s3));
+ 183              		.loc 1 41 0
+ 184 01d6 488D95E0 		lea	rdx, [rbp-288]
+ 184      FEFFFF
+ 185 01dd 488D85F0 		lea	rax, [rbp-272]
+ 185      FEFFFF
+ 186 01e4 4889D6   		mov	rsi, rdx
+ 187 01e7 4889C7   		mov	rdi, rax
+GAS LISTING /tmp/cc7vwgms.s 			page 6
+
+
+ 188 01ea E8000000 		call	strindex
+ 188      00
+ 189 01ef 89C1     		mov	ecx, eax
+ 190 01f1 488D95E0 		lea	rdx, [rbp-288]
+ 190      FEFFFF
+ 191 01f8 488D85F0 		lea	rax, [rbp-272]
+ 191      FEFFFF
+ 192 01ff 4889C6   		mov	rsi, rax
+ 193 0202 BF000000 		mov	edi, OFFSET FLAT:.LC1
+ 193      00
+ 194 0207 B8000000 		mov	eax, 0
+ 194      00
+ 195 020c E8000000 		call	printf
+ 195      00
+  42:strindex.c    ****     printf("strindex(%s,%s) = %d\n", s1, s4, strindex(s1, s4));
+ 196              		.loc 1 42 0
+ 197 0211 488D9500 		lea	rdx, [rbp-256]
+ 197      FFFFFF
+ 198 0218 488D85F0 		lea	rax, [rbp-272]
+ 198      FEFFFF
+ 199 021f 4889D6   		mov	rsi, rdx
+ 200 0222 4889C7   		mov	rdi, rax
+ 201 0225 E8000000 		call	strindex
+ 201      00
+ 202 022a 89C1     		mov	ecx, eax
+ 203 022c 488D9500 		lea	rdx, [rbp-256]
+ 203      FFFFFF
+ 204 0233 488D85F0 		lea	rax, [rbp-272]
+ 204      FEFFFF
+ 205 023a 4889C6   		mov	rsi, rax
+ 206 023d BF000000 		mov	edi, OFFSET FLAT:.LC1
+ 206      00
+ 207 0242 B8000000 		mov	eax, 0
+ 207      00
+ 208 0247 E8000000 		call	printf
+ 208      00
+  43:strindex.c    ****     printf("strindex(%s,%s) = %d\n", s1, s5, strindex(s1, s5));
+ 209              		.loc 1 43 0
+ 210 024c 488D9520 		lea	rdx, [rbp-224]
+ 210      FFFFFF
+ 211 0253 488D85F0 		lea	rax, [rbp-272]
+ 211      FEFFFF
+ 212 025a 4889D6   		mov	rsi, rdx
+ 213 025d 4889C7   		mov	rdi, rax
+ 214 0260 E8000000 		call	strindex
+ 214      00
+ 215 0265 89C1     		mov	ecx, eax
+ 216 0267 488D9520 		lea	rdx, [rbp-224]
+ 216      FFFFFF
+ 217 026e 488D85F0 		lea	rax, [rbp-272]
+ 217      FEFFFF
+ 218 0275 4889C6   		mov	rsi, rax
+ 219 0278 BF000000 		mov	edi, OFFSET FLAT:.LC1
+ 219      00
+ 220 027d B8000000 		mov	eax, 0
+ 220      00
+ 221 0282 E8000000 		call	printf
+GAS LISTING /tmp/cc7vwgms.s 			page 7
+
+
+ 221      00
+  44:strindex.c    ****     printf("s1:%s, s2:%s,s3:%s,s4:%s\n", s1, s2, s3, s4);
+ 222              		.loc 1 44 0
+ 223 0287 488DB500 		lea	rsi, [rbp-256]
+ 223      FFFFFF
+ 224 028e 488D8DE0 		lea	rcx, [rbp-288]
+ 224      FEFFFF
+ 225 0295 488D95D0 		lea	rdx, [rbp-304]
+ 225      FEFFFF
+ 226 029c 488D85F0 		lea	rax, [rbp-272]
+ 226      FEFFFF
+ 227 02a3 4989F0   		mov	r8, rsi
+ 228 02a6 4889C6   		mov	rsi, rax
+ 229 02a9 BF000000 		mov	edi, OFFSET FLAT:.LC2
+ 229      00
+ 230 02ae B8000000 		mov	eax, 0
+ 230      00
+ 231 02b3 E8000000 		call	printf
+ 231      00
+  45:strindex.c    **** 
+  46:strindex.c    ****     return 0;
+ 232              		.loc 1 46 0
+ 233 02b8 B8000000 		mov	eax, 0
+ 233      00
+  47:strindex.c    **** }...
+ 234              		.loc 1 47 0
+ 235 02bd 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+ 236 02c1 64483314 		xor	rdx, QWORD PTR fs:40
+ 236      25280000 
+ 236      00
+ 237 02ca 7405     		je	.L12
+ 238 02cc E8000000 		call	__stack_chk_fail
+ 238      00
+ 239              	.L12:
+ 240 02d1 C9       		leave
+ 241              	.LCFI5:
+ 242              		.cfi_def_cfa 7, 8
+ 243 02d2 C3       		ret
+ 244              		.cfi_endproc
+ 245              	.LFE1:
+ 247              	.Letext0:
+GAS LISTING /tmp/cc7vwgms.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 strindex.c
+     /tmp/cc7vwgms.s:7      .text:0000000000000000 strindex
+     /tmp/cc7vwgms.s:118    .text:00000000000000c8 main
+
+UNDEFINED SYMBOLS
+printf
+__stack_chk_fail

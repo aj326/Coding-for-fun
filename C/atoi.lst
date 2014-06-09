@@ -1,0 +1,163 @@
+GAS LISTING /tmp/cc3H4Fc5.s 			page 1
+
+
+   1              		.file	"atoi.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.globl	my_atoi
+   7              	my_atoi:
+   8              	.LFB2:
+   9              		.file 1 "atoi.c"
+   1:atoi.c        **** #include <stdio.h>
+   2:atoi.c        **** #include <stdlib.h>
+   3:atoi.c        **** 
+   4:atoi.c        **** /* atoi: convert s to integer */
+   5:atoi.c        **** int my_atoi(char *s)
+   6:atoi.c        **** {
+  10              		.loc 1 6 0
+  11              		.cfi_startproc
+  12 0000 55       		push	rbp
+  13              	.LCFI0:
+  14              		.cfi_def_cfa_offset 16
+  15              		.cfi_offset 6, -16
+  16 0001 4889E5   		mov	rbp, rsp
+  17              	.LCFI1:
+  18              		.cfi_def_cfa_register 6
+  19 0004 48897DE8 		mov	QWORD PTR [rbp-24], rdi
+   7:atoi.c        ****     int n;
+   8:atoi.c        ****     // printf("%c\n", *s++);
+   9:atoi.c        ****     // printf("%c\n", *s++);
+  10:atoi.c        ****     // printf("%c\n", *s++);
+  11:atoi.c        ****     // printf("%c\n", *s++);
+  12:atoi.c        ****     n = 0;
+  20              		.loc 1 12 0
+  21 0008 C745FC00 		mov	DWORD PTR [rbp-4], 0
+  21      000000
+  13:atoi.c        ****      while(*s >= '0' && *s <= '9'){
+  22              		.loc 1 13 0
+  23 000f EB25     		jmp	.L2
+  24              	.L4:
+  14:atoi.c        ****         n = 10 * n + (*s++ - '0');
+  25              		.loc 1 14 0
+  26 0011 8B55FC   		mov	edx, DWORD PTR [rbp-4]
+  27 0014 89D0     		mov	eax, edx
+  28 0016 C1E002   		sal	eax, 2
+  29 0019 01D0     		add	eax, edx
+  30 001b 01C0     		add	eax, eax
+  31 001d 89C2     		mov	edx, eax
+  32 001f 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  33 0023 0FB600   		movzx	eax, BYTE PTR [rax]
+  34 0026 0FBEC0   		movsx	eax, al
+  35 0029 83E830   		sub	eax, 48
+  36 002c 01D0     		add	eax, edx
+  37 002e 8945FC   		mov	DWORD PTR [rbp-4], eax
+  38 0031 488345E8 		add	QWORD PTR [rbp-24], 1
+  38      01
+  39              	.L2:
+  13:atoi.c        ****      while(*s >= '0' && *s <= '9'){
+  40              		.loc 1 13 0 discriminator 1
+  41 0036 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+GAS LISTING /tmp/cc3H4Fc5.s 			page 2
+
+
+  42 003a 0FB600   		movzx	eax, BYTE PTR [rax]
+  43 003d 3C2F     		cmp	al, 47
+  44 003f 7E0B     		jle	.L3
+  13:atoi.c        ****      while(*s >= '0' && *s <= '9'){
+  45              		.loc 1 13 0 is_stmt 0 discriminator 2
+  46 0041 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  47 0045 0FB600   		movzx	eax, BYTE PTR [rax]
+  48 0048 3C39     		cmp	al, 57
+  49 004a 7EC5     		jle	.L4
+  50              	.L3:
+  15:atoi.c        ****    }
+  16:atoi.c        ****     return n;
+  51              		.loc 1 16 0 is_stmt 1
+  52 004c 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  17:atoi.c        **** }
+  53              		.loc 1 17 0
+  54 004f 5D       		pop	rbp
+  55              	.LCFI2:
+  56              		.cfi_def_cfa 7, 8
+  57 0050 C3       		ret
+  58              		.cfi_endproc
+  59              	.LFE2:
+  61              		.section	.rodata
+  62              	.LC0:
+  63 0000 25640A00 		.string	"%d\n"
+  64              		.text
+  65              		.globl	main
+  67              	main:
+  68              	.LFB3:
+  18:atoi.c        **** int main(){
+  69              		.loc 1 18 0
+  70              		.cfi_startproc
+  71 0051 55       		push	rbp
+  72              	.LCFI3:
+  73              		.cfi_def_cfa_offset 16
+  74              		.cfi_offset 6, -16
+  75 0052 4889E5   		mov	rbp, rsp
+  76              	.LCFI4:
+  77              		.cfi_def_cfa_register 6
+  78 0055 4883EC10 		sub	rsp, 16
+  79              		.loc 1 18 0
+  80 0059 64488B04 		mov	rax, QWORD PTR fs:40
+  80      25280000 
+  80      00
+  81 0062 488945F8 		mov	QWORD PTR [rbp-8], rax
+  82 0066 31C0     		xor	eax, eax
+  19:atoi.c        **** char s[] = "1234";
+  83              		.loc 1 19 0
+  84 0068 C745F031 		mov	DWORD PTR [rbp-16], 875770417
+  84      323334
+  85 006f C645F400 		mov	BYTE PTR [rbp-12], 0
+  20:atoi.c        **** // char *ps = s;
+  21:atoi.c        **** printf("%d\n", my_atoi(s));
+  86              		.loc 1 21 0
+  87 0073 488D45F0 		lea	rax, [rbp-16]
+  88 0077 4889C7   		mov	rdi, rax
+  89 007a E8000000 		call	my_atoi
+GAS LISTING /tmp/cc3H4Fc5.s 			page 3
+
+
+  89      00
+  90 007f 89C6     		mov	esi, eax
+  91 0081 BF000000 		mov	edi, OFFSET FLAT:.LC0
+  91      00
+  92 0086 B8000000 		mov	eax, 0
+  92      00
+  93 008b E8000000 		call	printf
+  93      00
+  22:atoi.c        **** return 0;
+  94              		.loc 1 22 0
+  95 0090 B8000000 		mov	eax, 0
+  95      00
+  23:atoi.c        **** }...
+  96              		.loc 1 23 0
+  97 0095 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+  98 0099 64483314 		xor	rdx, QWORD PTR fs:40
+  98      25280000 
+  98      00
+  99 00a2 7405     		je	.L8
+ 100 00a4 E8000000 		call	__stack_chk_fail
+ 100      00
+ 101              	.L8:
+ 102 00a9 C9       		leave
+ 103              	.LCFI5:
+ 104              		.cfi_def_cfa 7, 8
+ 105 00aa C3       		ret
+ 106              		.cfi_endproc
+ 107              	.LFE3:
+ 109              	.Letext0:
+GAS LISTING /tmp/cc3H4Fc5.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 atoi.c
+     /tmp/cc3H4Fc5.s:7      .text:0000000000000000 my_atoi
+     /tmp/cc3H4Fc5.s:67     .text:0000000000000051 main
+
+UNDEFINED SYMBOLS
+printf
+__stack_chk_fail

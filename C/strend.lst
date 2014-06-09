@@ -1,0 +1,317 @@
+GAS LISTING /tmp/ccWh33Uu.s 			page 1
+
+
+   1              		.file	"strend.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.globl	strend
+   7              	strend:
+   8              	.LFB2:
+   9              		.file 1 "strend.c"
+   1:strend.c      **** #include <stdio.h>
+   2:strend.c      **** #include <stdlib.h>
+   3:strend.c      **** int strend (char *s, char *t){
+  10              		.loc 1 3 0
+  11              		.cfi_startproc
+  12 0000 55       		push	rbp
+  13              	.LCFI0:
+  14              		.cfi_def_cfa_offset 16
+  15              		.cfi_offset 6, -16
+  16 0001 4889E5   		mov	rbp, rsp
+  17              	.LCFI1:
+  18              		.cfi_def_cfa_register 6
+  19 0004 48897DE8 		mov	QWORD PTR [rbp-24], rdi
+  20 0008 488975E0 		mov	QWORD PTR [rbp-32], rsi
+   4:strend.c      **** 	int sc, tc;
+   5:strend.c      **** 	sc = tc =0; 
+  21              		.loc 1 5 0
+  22 000c C745FC00 		mov	DWORD PTR [rbp-4], 0
+  22      000000
+  23 0013 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  24 0016 8945F8   		mov	DWORD PTR [rbp-8], eax
+   6:strend.c      **** 	while(*s++) sc++;
+  25              		.loc 1 6 0
+  26 0019 EB04     		jmp	.L2
+  27              	.L3:
+  28              		.loc 1 6 0 is_stmt 0 discriminator 2
+  29 001b 8345F801 		add	DWORD PTR [rbp-8], 1
+  30              	.L2:
+  31              		.loc 1 6 0 discriminator 1
+  32 001f 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  33 0023 0FB600   		movzx	eax, BYTE PTR [rax]
+  34 0026 84C0     		test	al, al
+  35 0028 0F95C0   		setne	al
+  36 002b 488345E8 		add	QWORD PTR [rbp-24], 1
+  36      01
+  37 0030 84C0     		test	al, al
+  38 0032 75E7     		jne	.L3
+   7:strend.c      **** 	while(*t++) tc++;
+  39              		.loc 1 7 0 is_stmt 1
+  40 0034 EB04     		jmp	.L4
+  41              	.L5:
+  42              		.loc 1 7 0 is_stmt 0 discriminator 2
+  43 0036 8345FC01 		add	DWORD PTR [rbp-4], 1
+  44              	.L4:
+  45              		.loc 1 7 0 discriminator 1
+  46 003a 488B45E0 		mov	rax, QWORD PTR [rbp-32]
+  47 003e 0FB600   		movzx	eax, BYTE PTR [rax]
+  48 0041 84C0     		test	al, al
+  49 0043 0F95C0   		setne	al
+GAS LISTING /tmp/ccWh33Uu.s 			page 2
+
+
+  50 0046 488345E0 		add	QWORD PTR [rbp-32], 1
+  50      01
+  51 004b 84C0     		test	al, al
+  52 004d 75E7     		jne	.L5
+   8:strend.c      **** 	if(tc>sc) return 0;
+  53              		.loc 1 8 0 is_stmt 1
+  54 004f 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  55 0052 3B45F8   		cmp	eax, DWORD PTR [rbp-8]
+  56 0055 7E07     		jle	.L6
+  57              		.loc 1 8 0 is_stmt 0 discriminator 1
+  58 0057 B8000000 		mov	eax, 0
+  58      00
+  59 005c EB61     		jmp	.L7
+  60              	.L6:
+   9:strend.c      **** 	s-=tc;
+  61              		.loc 1 9 0 is_stmt 1
+  62 005e 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  63 0061 4898     		cdqe
+  64 0063 48F7D8   		neg	rax
+  65 0066 480145E8 		add	QWORD PTR [rbp-24], rax
+  10:strend.c      **** 	t-=tc;
+  66              		.loc 1 10 0
+  67 006a 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  68 006d 4898     		cdqe
+  69 006f 48F7D8   		neg	rax
+  70 0072 480145E0 		add	QWORD PTR [rbp-32], rax
+  71              	.L10:
+  11:strend.c      **** 	// printf("*s after math %c\n", *s);
+  12:strend.c      **** 	// printf("*t after math %c\n", *t);	
+  13:strend.c      **** 	// printf("sc %d, tc %d\n",sc,tc );
+  14:strend.c      **** 	do {
+  15:strend.c      **** 		if (*s != *t) return 0; 
+  72              		.loc 1 15 0
+  73 0076 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  74 007a 0FB610   		movzx	edx, BYTE PTR [rax]
+  75 007d 488B45E0 		mov	rax, QWORD PTR [rbp-32]
+  76 0081 0FB600   		movzx	eax, BYTE PTR [rax]
+  77 0084 38C2     		cmp	dl, al
+  78 0086 7407     		je	.L8
+  79              		.loc 1 15 0 is_stmt 0 discriminator 1
+  80 0088 B8000000 		mov	eax, 0
+  80      00
+  81 008d EB30     		jmp	.L7
+  82              	.L8:
+  16:strend.c      **** 	// printf("sc %d, tc %d\n",sc,tc );
+  17:strend.c      **** 	// // printf("'n' + 3 in do %c\n", 'n');
+  18:strend.c      **** 	// printf("*s in do %c\n", *s);
+  19:strend.c      **** 	// printf("*s+2 in do %c\n", *(s+2));
+  20:strend.c      **** 	// printf("*t in do %c\n", *t);
+  21:strend.c      **** 	// printf("*t+2 in do %c\n", *(t+2));
+  22:strend.c      **** }	
+  23:strend.c      **** 	while((--tc > 0) && (*s++ == *t++));
+  83              		.loc 1 23 0 is_stmt 1
+  84 008f 836DFC01 		sub	DWORD PTR [rbp-4], 1
+  85 0093 837DFC00 		cmp	DWORD PTR [rbp-4], 0
+  86 0097 7E21     		jle	.L9
+  87              		.loc 1 23 0 is_stmt 0 discriminator 1
+GAS LISTING /tmp/ccWh33Uu.s 			page 3
+
+
+  88 0099 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  89 009d 0FB610   		movzx	edx, BYTE PTR [rax]
+  90 00a0 488B45E0 		mov	rax, QWORD PTR [rbp-32]
+  91 00a4 0FB600   		movzx	eax, BYTE PTR [rax]
+  92 00a7 38C2     		cmp	dl, al
+  93 00a9 0F94C0   		sete	al
+  94 00ac 488345E8 		add	QWORD PTR [rbp-24], 1
+  94      01
+  95 00b1 488345E0 		add	QWORD PTR [rbp-32], 1
+  95      01
+  96 00b6 84C0     		test	al, al
+  97 00b8 75BC     		jne	.L10
+  98              	.L9:
+  24:strend.c      **** 	
+  25:strend.c      **** 	return 1;
+  99              		.loc 1 25 0 is_stmt 1
+ 100 00ba B8010000 		mov	eax, 1
+ 100      00
+ 101              	.L7:
+  26:strend.c      **** }
+ 102              		.loc 1 26 0
+ 103 00bf 5D       		pop	rbp
+ 104              	.LCFI2:
+ 105              		.cfi_def_cfa 7, 8
+ 106 00c0 C3       		ret
+ 107              		.cfi_endproc
+ 108              	.LFE2:
+ 110              		.section	.rodata
+ 111              	.LC0:
+ 112 0000 736F6D65 		.string	"some really long string."
+ 112      20726561 
+ 112      6C6C7920 
+ 112      6C6F6E67 
+ 112      20737472 
+ 113              	.LC1:
+ 114 0019 6E672E00 		.string	"ng."
+ 115              	.LC2:
+ 116 001d 6E6700   		.string	"ng"
+ 117              		.align 8
+ 118              	.LC3:
+ 119 0020 54686520 		.string	"The string (%s) has (%s) at the end.\n"
+ 119      73747269 
+ 119      6E672028 
+ 119      25732920 
+ 119      68617320 
+ 120 0046 0000     		.align 8
+ 121              	.LC4:
+ 122 0048 54686520 		.string	"The string (%s) doesn't have (%s) at the end.\n"
+ 122      73747269 
+ 122      6E672028 
+ 122      25732920 
+ 122      646F6573 
+ 123              		.text
+ 124              		.globl	main
+ 126              	main:
+ 127              	.LFB3:
+  27:strend.c      **** 
+GAS LISTING /tmp/ccWh33Uu.s 			page 4
+
+
+  28:strend.c      **** int main(){
+ 128              		.loc 1 28 0
+ 129              		.cfi_startproc
+ 130 00c1 55       		push	rbp
+ 131              	.LCFI3:
+ 132              		.cfi_def_cfa_offset 16
+ 133              		.cfi_offset 6, -16
+ 134 00c2 4889E5   		mov	rbp, rsp
+ 135              	.LCFI4:
+ 136              		.cfi_def_cfa_register 6
+ 137 00c5 4883EC20 		sub	rsp, 32
+  29:strend.c      ****   char *s1 = "some really long string.";
+ 138              		.loc 1 29 0
+ 139 00c9 48C745E8 		mov	QWORD PTR [rbp-24], OFFSET FLAT:.LC0
+ 139      00000000 
+  30:strend.c      ****   char *s2 = "ng.";
+ 140              		.loc 1 30 0
+ 141 00d1 48C745F0 		mov	QWORD PTR [rbp-16], OFFSET FLAT:.LC1
+ 141      00000000 
+  31:strend.c      ****   char *s3 = "ng";
+ 142              		.loc 1 31 0
+ 143 00d9 48C745F8 		mov	QWORD PTR [rbp-8], OFFSET FLAT:.LC2
+ 143      00000000 
+  32:strend.c      **** 
+  33:strend.c      ****   if(strend(s1, s2))
+ 144              		.loc 1 33 0
+ 145 00e1 488B55F0 		mov	rdx, QWORD PTR [rbp-16]
+ 146 00e5 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+ 147 00e9 4889D6   		mov	rsi, rdx
+ 148 00ec 4889C7   		mov	rdi, rax
+ 149 00ef E8000000 		call	strend
+ 149      00
+ 150 00f4 85C0     		test	eax, eax
+ 151 00f6 741C     		je	.L12
+  34:strend.c      ****   {
+  35:strend.c      ****     printf("The string (%s) has (%s) at the end.\n", s1, s2);
+ 152              		.loc 1 35 0
+ 153 00f8 488B55F0 		mov	rdx, QWORD PTR [rbp-16]
+ 154 00fc 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+ 155 0100 4889C6   		mov	rsi, rax
+ 156 0103 BF000000 		mov	edi, OFFSET FLAT:.LC3
+ 156      00
+ 157 0108 B8000000 		mov	eax, 0
+ 157      00
+ 158 010d E8000000 		call	printf
+ 158      00
+ 159 0112 EB1A     		jmp	.L13
+ 160              	.L12:
+  36:strend.c      ****   }
+  37:strend.c      ****   else
+  38:strend.c      ****   {
+  39:strend.c      ****     printf("The string (%s) doesn't have (%s) at the end.\n", s1, s2);
+ 161              		.loc 1 39 0
+ 162 0114 488B55F0 		mov	rdx, QWORD PTR [rbp-16]
+ 163 0118 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+ 164 011c 4889C6   		mov	rsi, rax
+ 165 011f BF000000 		mov	edi, OFFSET FLAT:.LC4
+GAS LISTING /tmp/ccWh33Uu.s 			page 5
+
+
+ 165      00
+ 166 0124 B8000000 		mov	eax, 0
+ 166      00
+ 167 0129 E8000000 		call	printf
+ 167      00
+ 168              	.L13:
+  40:strend.c      ****   }
+  41:strend.c      ****   if(strend(s1, s3))
+ 169              		.loc 1 41 0
+ 170 012e 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+ 171 0132 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+ 172 0136 4889D6   		mov	rsi, rdx
+ 173 0139 4889C7   		mov	rdi, rax
+ 174 013c E8000000 		call	strend
+ 174      00
+ 175 0141 85C0     		test	eax, eax
+ 176 0143 741C     		je	.L14
+  42:strend.c      ****   {
+  43:strend.c      ****     printf("The string (%s) has (%s) at the end.\n", s1, s3);
+ 177              		.loc 1 43 0
+ 178 0145 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+ 179 0149 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+ 180 014d 4889C6   		mov	rsi, rax
+ 181 0150 BF000000 		mov	edi, OFFSET FLAT:.LC3
+ 181      00
+ 182 0155 B8000000 		mov	eax, 0
+ 182      00
+ 183 015a E8000000 		call	printf
+ 183      00
+ 184 015f EB1A     		jmp	.L15
+ 185              	.L14:
+  44:strend.c      ****   }
+  45:strend.c      ****   else
+  46:strend.c      ****   {
+  47:strend.c      ****     printf("The string (%s) doesn't have (%s) at the end.\n", s1, s3);
+ 186              		.loc 1 47 0
+ 187 0161 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+ 188 0165 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+ 189 0169 4889C6   		mov	rsi, rax
+ 190 016c BF000000 		mov	edi, OFFSET FLAT:.LC4
+ 190      00
+ 191 0171 B8000000 		mov	eax, 0
+ 191      00
+ 192 0176 E8000000 		call	printf
+ 192      00
+ 193              	.L15:
+  48:strend.c      ****   }
+  49:strend.c      **** 
+  50:strend.c      ****   return 0;
+ 194              		.loc 1 50 0
+ 195 017b B8000000 		mov	eax, 0
+ 195      00
+  51:strend.c      **** }...
+ 196              		.loc 1 51 0
+ 197 0180 C9       		leave
+ 198              	.LCFI5:
+ 199              		.cfi_def_cfa 7, 8
+GAS LISTING /tmp/ccWh33Uu.s 			page 6
+
+
+ 200 0181 C3       		ret
+ 201              		.cfi_endproc
+ 202              	.LFE3:
+ 204              	.Letext0:
+GAS LISTING /tmp/ccWh33Uu.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 strend.c
+     /tmp/ccWh33Uu.s:7      .text:0000000000000000 strend
+     /tmp/ccWh33Uu.s:126    .text:00000000000000c1 main
+
+UNDEFINED SYMBOLS
+printf

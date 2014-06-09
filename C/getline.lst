@@ -1,0 +1,191 @@
+GAS LISTING /tmp/ccHUBLZz.s 			page 1
+
+
+   1              		.file	"getline.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.globl	my_getline
+   7              	my_getline:
+   8              	.LFB2:
+   9              		.file 1 "getline.c"
+   1:getline.c     **** #include <stdio.h>
+   2:getline.c     **** #include <stdlib.h>
+   3:getline.c     **** #define MAXLINE 1000 /* maximum input line length */
+   4:getline.c     **** 
+   5:getline.c     **** /* getline: get line into s, return length */
+   6:getline.c     **** int my_getline(char *s)
+   7:getline.c     **** {
+  10              		.loc 1 7 0
+  11              		.cfi_startproc
+  12 0000 55       		push	rbp
+  13              	.LCFI0:
+  14              		.cfi_def_cfa_offset 16
+  15              		.cfi_offset 6, -16
+  16 0001 4889E5   		mov	rbp, rsp
+  17              	.LCFI1:
+  18              		.cfi_def_cfa_register 6
+  19 0004 4883EC20 		sub	rsp, 32
+  20 0008 48897DE8 		mov	QWORD PTR [rbp-24], rdi
+   8:getline.c     ****     int i;
+   9:getline.c     ****     char c;
+  10:getline.c     ****     for (i = 0; (*s++ = (c = getchar()) ) && c != '\n'; i++)
+  21              		.loc 1 10 0
+  22 000c C745FC00 		mov	DWORD PTR [rbp-4], 0
+  22      000000
+  23 0013 EB1D     		jmp	.L2
+  24              	.L5:
+  11:getline.c     ****     if (c == '\n'){
+  25              		.loc 1 11 0
+  26 0015 807DFB0A 		cmp	BYTE PTR [rbp-5], 10
+  27 0019 7513     		jne	.L3
+  12:getline.c     ****         *s++ = c;
+  28              		.loc 1 12 0
+  29 001b 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  30 001f 0FB655FB 		movzx	edx, BYTE PTR [rbp-5]
+  31 0023 8810     		mov	BYTE PTR [rax], dl
+  32 0025 488345E8 		add	QWORD PTR [rbp-24], 1
+  32      01
+  13:getline.c     ****         i++;
+  33              		.loc 1 13 0
+  34 002a 8345FC01 		add	DWORD PTR [rbp-4], 1
+  35              	.L3:
+  10:getline.c     ****     for (i = 0; (*s++ = (c = getchar()) ) && c != '\n'; i++)
+  36              		.loc 1 10 0
+  37 002e 8345FC01 		add	DWORD PTR [rbp-4], 1
+  38              	.L2:
+  10:getline.c     ****     for (i = 0; (*s++ = (c = getchar()) ) && c != '\n'; i++)
+  39              		.loc 1 10 0 is_stmt 0 discriminator 1
+  40 0032 E8000000 		call	getchar
+  40      00
+GAS LISTING /tmp/ccHUBLZz.s 			page 2
+
+
+  41 0037 8845FB   		mov	BYTE PTR [rbp-5], al
+  42 003a 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  43 003e 0FB655FB 		movzx	edx, BYTE PTR [rbp-5]
+  44 0042 8810     		mov	BYTE PTR [rax], dl
+  45 0044 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  46 0048 0FB600   		movzx	eax, BYTE PTR [rax]
+  47 004b 84C0     		test	al, al
+  48 004d 0F95C0   		setne	al
+  49 0050 488345E8 		add	QWORD PTR [rbp-24], 1
+  49      01
+  50 0055 84C0     		test	al, al
+  51 0057 7406     		je	.L4
+  10:getline.c     ****     for (i = 0; (*s++ = (c = getchar()) ) && c != '\n'; i++)
+  52              		.loc 1 10 0 discriminator 2
+  53 0059 807DFB0A 		cmp	BYTE PTR [rbp-5], 10
+  54 005d 75B6     		jne	.L5
+  55              	.L4:
+  14:getline.c     ****     }
+  15:getline.c     ****     *s = '\0';
+  56              		.loc 1 15 0 is_stmt 1
+  57 005f 488B45E8 		mov	rax, QWORD PTR [rbp-24]
+  58 0063 C60000   		mov	BYTE PTR [rax], 0
+  16:getline.c     ****     return i;
+  59              		.loc 1 16 0
+  60 0066 8B45FC   		mov	eax, DWORD PTR [rbp-4]
+  17:getline.c     **** }
+  61              		.loc 1 17 0
+  62 0069 C9       		leave
+  63              	.LCFI2:
+  64              		.cfi_def_cfa 7, 8
+  65 006a C3       		ret
+  66              		.cfi_endproc
+  67              	.LFE2:
+  69              		.section	.rodata
+  70              	.LC0:
+  71 0000 25732025 		.string	"%s %d\n"
+  71      640A00
+  72              		.text
+  73              		.globl	main
+  75              	main:
+  76              	.LFB3:
+  18:getline.c     **** int main()
+  19:getline.c     **** {
+  77              		.loc 1 19 0
+  78              		.cfi_startproc
+  79 006b 55       		push	rbp
+  80              	.LCFI3:
+  81              		.cfi_def_cfa_offset 16
+  82              		.cfi_offset 6, -16
+  83 006c 4889E5   		mov	rbp, rsp
+  84              	.LCFI4:
+  85              		.cfi_def_cfa_register 6
+  86 006f 4881EC00 		sub	rsp, 1024
+  86      040000
+  87              		.loc 1 19 0
+  88 0076 64488B04 		mov	rax, QWORD PTR fs:40
+  88      25280000 
+GAS LISTING /tmp/ccHUBLZz.s 			page 3
+
+
+  88      00
+  89 007f 488945F8 		mov	QWORD PTR [rbp-8], rax
+  90 0083 31C0     		xor	eax, eax
+  20:getline.c     ****   	// char *s1 = "some really long string.\n";
+  21:getline.c     **** 
+  22:getline.c     ****   	int r;
+  23:getline.c     ****   	char s[MAXLINE];
+  24:getline.c     ****   	char *p = s;
+  91              		.loc 1 24 0
+  92 0085 488D8510 		lea	rax, [rbp-1008]
+  92      FCFFFF
+  93 008c 48898508 		mov	QWORD PTR [rbp-1016], rax
+  93      FCFFFF
+  25:getline.c     ****   	r = my_getline(p);
+  94              		.loc 1 25 0
+  95 0093 488B8508 		mov	rax, QWORD PTR [rbp-1016]
+  95      FCFFFF
+  96 009a 4889C7   		mov	rdi, rax
+  97 009d E8000000 		call	my_getline
+  97      00
+  98 00a2 898504FC 		mov	DWORD PTR [rbp-1020], eax
+  98      FFFF
+  26:getline.c     ****   	printf("%s %d\n",s, r);
+  99              		.loc 1 26 0
+ 100 00a8 8B9504FC 		mov	edx, DWORD PTR [rbp-1020]
+ 100      FFFF
+ 101 00ae 488D8510 		lea	rax, [rbp-1008]
+ 101      FCFFFF
+ 102 00b5 4889C6   		mov	rsi, rax
+ 103 00b8 BF000000 		mov	edi, OFFSET FLAT:.LC0
+ 103      00
+ 104 00bd B8000000 		mov	eax, 0
+ 104      00
+ 105 00c2 E8000000 		call	printf
+ 105      00
+  27:getline.c     ****     return 0;
+ 106              		.loc 1 27 0
+ 107 00c7 B8000000 		mov	eax, 0
+ 107      00
+  28:getline.c     **** }...
+ 108              		.loc 1 28 0
+ 109 00cc 488B55F8 		mov	rdx, QWORD PTR [rbp-8]
+ 110 00d0 64483314 		xor	rdx, QWORD PTR fs:40
+ 110      25280000 
+ 110      00
+ 111 00d9 7405     		je	.L9
+ 112 00db E8000000 		call	__stack_chk_fail
+ 112      00
+ 113              	.L9:
+ 114 00e0 C9       		leave
+ 115              	.LCFI5:
+ 116              		.cfi_def_cfa 7, 8
+ 117 00e1 C3       		ret
+ 118              		.cfi_endproc
+ 119              	.LFE3:
+ 121              	.Letext0:
+GAS LISTING /tmp/ccHUBLZz.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 getline.c
+     /tmp/ccHUBLZz.s:7      .text:0000000000000000 my_getline
+     /tmp/ccHUBLZz.s:75     .text:000000000000006b main
+
+UNDEFINED SYMBOLS
+getchar
+printf
+__stack_chk_fail

@@ -1,0 +1,840 @@
+GAS LISTING strindex_smarter.s 			page 1
+
+
+   1              		.file	"strindex_smarter.c"
+   2              		.intel_syntax noprefix
+   3              		.text
+   4              	.Ltext0:
+   5              		.p2align 4,,15
+   6              		.globl	strindex
+   8              	strindex:
+   9              	.LFB24:
+  10              		.file 1 "strindex_smarter.c"
+   1:strindex_smarter.c **** #include <stdio.h>
+   2:strindex_smarter.c **** 
+   3:strindex_smarter.c **** /* strindex: return index of t in s, -1 if none */
+   4:strindex_smarter.c **** int strindex(char s[], char t[])
+   5:strindex_smarter.c **** {
+  11              		.loc 1 5 0
+  12              		.cfi_startproc
+  13              	.LVL0:
+   6:strindex_smarter.c ****     int i;
+   7:strindex_smarter.c ****     char *pt, *ps;
+   8:strindex_smarter.c ****     ps = s;
+   9:strindex_smarter.c ****     pt = t;
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+  14              		.loc 1 10 0
+  15 0000 440FB607 		movzx	r8d, BYTE PTR [rdi]
+  11:strindex_smarter.c ****     {
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+  13:strindex_smarter.c ****         // printf("i = %d after for loop; s = %c, *t = %c\n", i, *s,*t);
+  14:strindex_smarter.c ****         if (*t == '\0')
+  15:strindex_smarter.c ****         {
+  16:strindex_smarter.c ****             // printf("ts:%d\n",ts);                // ts-;
+  17:strindex_smarter.c ****             // printf("t ended: %c\n",*t);
+  18:strindex_smarter.c ****             t = pt;
+  19:strindex_smarter.c ****             // printf("FIXING POINTER t ended: %c\n",*t);
+  20:strindex_smarter.c ****         }
+  21:strindex_smarter.c ****         else if (*t == *s)
+  22:strindex_smarter.c ****         {
+  23:strindex_smarter.c ****             // printf("found match, i: %d\n",i);
+  24:strindex_smarter.c ****             t = pt; s = ps;
+  25:strindex_smarter.c ****             return i;
+  26:strindex_smarter.c ****         }
+  27:strindex_smarter.c **** 
+  28:strindex_smarter.c ****     }
+  29:strindex_smarter.c ****     s = ps;
+  30:strindex_smarter.c ****     return -1;
+  16              		.loc 1 30 0
+  17 0004 B8FFFFFF 		mov	eax, -1
+  17      FF
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+  18              		.loc 1 10 0
+  19 0009 4584C0   		test	r8b, r8b
+  20 000c 7445     		je	.L2
+  21 000e 440FB616 		movzx	r10d, BYTE PTR [rsi]
+  22 0012 4531C9   		xor	r9d, r9d
+  23              	.LVL1:
+  24              		.p2align 4,,10
+  25 0015 0F1F00   		.p2align 3
+  26              	.L3:
+GAS LISTING strindex_smarter.s 			page 2
+
+
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+  27              		.loc 1 12 0 discriminator 1
+  28 0018 4584D2   		test	r10b, r10b
+  29 001b 4489C8   		mov	eax, r9d
+  30 001e 7420     		je	.L4
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+  31              		.loc 1 12 0 is_stmt 0
+  32 0020 4538C2   		cmp	r10b, r8b
+  33 0023 7435     		je	.L18
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+  34              		.loc 1 12 0 discriminator 1
+  35 0025 4889F2   		mov	rdx, rsi
+  36 0028 EB0B     		jmp	.L5
+  37              	.LVL2:
+  38 002a 660F1F44 		.p2align 4,,10
+  38      0000
+  39              		.p2align 3
+  40              	.L20:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+  41              		.loc 1 12 0 discriminator 2
+  42 0030 4138C8   		cmp	r8b, cl
+  43 0033 7423     		je	.L19
+  44              	.L5:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+  45              		.loc 1 12 0 discriminator 1
+  46 0035 4883C201 		add	rdx, 1
+  47              	.LVL3:
+  48 0039 0FB60A   		movzx	ecx, BYTE PTR [rdx]
+  49 003c 84C9     		test	cl, cl
+  50 003e 75F0     		jne	.L20
+  51              	.LVL4:
+  52              	.L4:
+  53 0040 4983C101 		add	r9, 1
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+  54              		.loc 1 10 0 is_stmt 1
+  55 0044 460FB604 		movzx	r8d, BYTE PTR [rdi+r9]
+  55      0F
+  56 0049 4584C0   		test	r8b, r8b
+  57 004c 75CA     		jne	.L3
+  58              		.loc 1 30 0
+  59 004e B8FFFFFF 		mov	eax, -1
+  59      FF
+  60              	.L2:
+  31:strindex_smarter.c **** 
+  32:strindex_smarter.c **** }
+  61              		.loc 1 32 0
+  62 0053 F3       		rep
+  63 0054 C3       		ret
+  64              	.LVL5:
+  65              		.p2align 4,,10
+  66 0055 0F1F00   		.p2align 3
+  67              	.L19:
+  68 0058 F3       		rep
+  69 0059 C3       		ret
+  70              	.LVL6:
+  71              	.L18:
+  72 005a F3       		rep
+GAS LISTING strindex_smarter.s 			page 3
+
+
+  73 005b C3       		ret
+  74              		.cfi_endproc
+  75              	.LFE24:
+  77              		.section	.rodata.str1.1,"aMS",@progbits,1
+  78              	.LC1:
+  79 0000 73747269 		.string	"strindex(%s,%s) = %d\n"
+  79      6E646578 
+  79      2825732C 
+  79      25732920 
+  79      3D202564 
+  80              	.LC2:
+  81 0016 73313A25 		.string	"s1:%s, s2:%s,s3:%s,s4:%s\n"
+  81      732C2073 
+  81      323A2573 
+  81      2C73333A 
+  81      25732C73 
+  82              		.section	.rodata.str1.8,"aMS",@progbits,1
+  83              		.align 8
+  84              	.LC0:
+  85 0000 7661646B 		.string	"vadkgjdglhfdagihoighaoighadsoifhoighoighoidsaghoidsaghoidsaghoidsahgoidsahgoidsahgoidsahg
+  85      676A6467 
+  85      6C686664 
+  85      61676968 
+  85      6F696768 
+  86              		.section	.text.startup,"ax",@progbits
+  87              		.p2align 4,,15
+  88              		.globl	main
+  90              	main:
+  91              	.LFB25:
+  33:strindex_smarter.c **** int main()
+  34:strindex_smarter.c **** {
+  92              		.loc 1 34 0
+  93              		.cfi_startproc
+  94 0000 4156     		push	r14
+  95              	.LCFI0:
+  96              		.cfi_def_cfa_offset 16
+  97              		.cfi_offset 14, -16
+  35:strindex_smarter.c ****     char s1[] = "abcd";
+  36:strindex_smarter.c ****     char s2[] = "bc";
+  37:strindex_smarter.c ****     char s3[] = "fe";
+  38:strindex_smarter.c ****     char s4[] = "vvvvvvvvvvvvvvvvvvvvvvvvvvabaa";
+  39:strindex_smarter.c ****     char s5[] = "vadkgjdglhfdagihoighaoighadsoifhoighoighoidsaghoidsaghoidsaghoidsahgoidsahgoidsahg
+  98              		.loc 1 39 0
+  99 0002 BE000000 		mov	esi, OFFSET FLAT:.LC0
+  99      00
+ 100 0007 B9190000 		mov	ecx, 25
+ 100      00
+  38:strindex_smarter.c ****     char s4[] = "vvvvvvvvvvvvvvvvvvvvvvvvvvabaa";
+ 101              		.loc 1 38 0
+ 102 000c 48BA7676 		movabs	rdx, 8536140394893047414
+ 102      76767676 
+ 102      7676
+  34:strindex_smarter.c **** {
+ 103              		.loc 1 34 0
+ 104 0016 4155     		push	r13
+ 105              	.LCFI1:
+ 106              		.cfi_def_cfa_offset 24
+GAS LISTING strindex_smarter.s 			page 4
+
+
+ 107              		.cfi_offset 13, -24
+ 108 0018 4154     		push	r12
+ 109              	.LCFI2:
+ 110              		.cfi_def_cfa_offset 32
+ 111              		.cfi_offset 12, -32
+ 112 001a 55       		push	rbp
+ 113              	.LCFI3:
+ 114              		.cfi_def_cfa_offset 40
+ 115              		.cfi_offset 6, -40
+ 116 001b 53       		push	rbx
+ 117              	.LCFI4:
+ 118              		.cfi_def_cfa_offset 48
+ 119              		.cfi_offset 3, -48
+ 120 001c 4881EC30 		sub	rsp, 304
+ 120      010000
+ 121              	.LCFI5:
+ 122              		.cfi_def_cfa_offset 352
+ 123              		.loc 1 39 0
+ 124 0023 488D6C24 		lea	rbp, [rsp+80]
+ 124      50
+  35:strindex_smarter.c ****     char s1[] = "abcd";
+ 125              		.loc 1 35 0
+ 126 0028 C7442420 		mov	DWORD PTR [rsp+32], 1684234849
+ 126      61626364 
+ 127 0030 C6442424 		mov	BYTE PTR [rsp+36], 0
+ 127      00
+  34:strindex_smarter.c **** {
+ 128              		.loc 1 34 0
+ 129 0035 64488B04 		mov	rax, QWORD PTR fs:40
+ 129      25280000 
+ 129      00
+ 130 003e 48898424 		mov	QWORD PTR [rsp+296], rax
+ 130      28010000 
+ 131 0046 31C0     		xor	eax, eax
+ 132              		.loc 1 39 0
+ 133 0048 4889EF   		mov	rdi, rbp
+  36:strindex_smarter.c ****     char s2[] = "bc";
+ 134              		.loc 1 36 0
+ 135 004b 66C70424 		mov	WORD PTR [rsp], 25442
+ 135      6263
+ 136 0051 C6442402 		mov	BYTE PTR [rsp+2], 0
+ 136      00
+ 137              		.loc 1 39 0
+ 138 0056 F348A5   		rep movsq
+  37:strindex_smarter.c ****     char s3[] = "fe";
+ 139              		.loc 1 37 0
+ 140 0059 66C74424 		mov	WORD PTR [rsp+16], 25958
+ 140      106665
+ 141 0060 C6442412 		mov	BYTE PTR [rsp+18], 0
+ 141      00
+  38:strindex_smarter.c ****     char s4[] = "vvvvvvvvvvvvvvvvvvvvvvvvvvabaa";
+ 142              		.loc 1 38 0
+ 143 0065 48895424 		mov	QWORD PTR [rsp+48], rdx
+ 143      30
+ 144 006a 48895424 		mov	QWORD PTR [rsp+56], rdx
+ 144      38
+ 145              	.LBB20:
+GAS LISTING strindex_smarter.s 			page 5
+
+
+ 146              	.LBB21:
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 147              		.loc 1 10 0
+ 148 006f 0FB64C24 		movzx	ecx, BYTE PTR [rsp+32]
+ 148      20
+ 149              	.LBE21:
+ 150              	.LBE20:
+  38:strindex_smarter.c ****     char s4[] = "vvvvvvvvvvvvvvvvvvvvvvvvvvabaa";
+ 151              		.loc 1 38 0
+ 152 0074 48895424 		mov	QWORD PTR [rsp+64], rdx
+ 152      40
+ 153 0079 C7442448 		mov	DWORD PTR [rsp+72], 1650554486
+ 153      76766162 
+ 154 0081 66C74424 		mov	WORD PTR [rsp+76], 24929
+ 154      4C6161
+ 155 0088 C644244E 		mov	BYTE PTR [rsp+78], 0
+ 155      00
+ 156              		.loc 1 39 0
+ 157 008d 0FB706   		movzx	eax, WORD PTR [rsi]
+ 158              	.LBB25:
+ 159              	.LBB22:
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 160              		.loc 1 10 0
+ 161 0090 84C9     		test	cl, cl
+ 162              	.LBE22:
+ 163              	.LBE25:
+ 164              		.loc 1 39 0
+ 165 0092 668907   		mov	WORD PTR [rdi], ax
+ 166 0095 0FB60500 		movzx	eax, BYTE PTR .LC0[rip+202]
+ 166      000000
+ 167 009c 884702   		mov	BYTE PTR [rdi+2], al
+ 168              	.LVL7:
+ 169              	.LBB26:
+ 170              	.LBB23:
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 171              		.loc 1 10 0
+ 172 009f 0F84F401 		je	.L39
+ 172      0000
+ 173 00a5 0FB63C24 		movzx	edi, BYTE PTR [rsp]
+ 174 00a9 488D5C24 		lea	rbx, [rsp+32]
+ 174      20
+ 175              	.LVL8:
+ 176 00ae 31F6     		xor	esi, esi
+ 177              	.LVL9:
+ 178              		.p2align 4,,10
+ 179              		.p2align 3
+ 180              	.L23:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 181              		.loc 1 12 0
+ 182 00b0 4084FF   		test	dil, dil
+ 183 00b3 4189F0   		mov	r8d, esi
+ 184 00b6 741F     		je	.L24
+ 185 00b8 4038CF   		cmp	dil, cl
+ 186 00bb 7433     		je	.L22
+  40:strindex_smarter.c **** 
+  41:strindex_smarter.c ****     printf("strindex(%s,%s) = %d\n", s1, s2, strindex(s1, s2));
+ 187              		.loc 1 41 0
+GAS LISTING strindex_smarter.s 			page 6
+
+
+ 188 00bd 4889E0   		mov	rax, rsp
+ 189 00c0 EB0A     		jmp	.L25
+ 190              	.LVL10:
+ 191              		.p2align 4,,10
+ 192 00c2 660F1F44 		.p2align 3
+ 192      0000
+ 193              	.L81:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 194              		.loc 1 12 0
+ 195 00c8 38CA     		cmp	dl, cl
+ 196 00ca 7424     		je	.L22
+ 197              	.L25:
+ 198 00cc 4883C001 		add	rax, 1
+ 199              	.LVL11:
+ 200 00d0 0FB610   		movzx	edx, BYTE PTR [rax]
+ 201 00d3 84D2     		test	dl, dl
+ 202 00d5 75F1     		jne	.L81
+ 203              	.LVL12:
+ 204              	.L24:
+ 205 00d7 4883C601 		add	rsi, 1
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 206              		.loc 1 10 0
+ 207 00db 0FB60C33 		movzx	ecx, BYTE PTR [rbx+rsi]
+ 208 00df 84C9     		test	cl, cl
+ 209 00e1 75CD     		jne	.L23
+  30:strindex_smarter.c ****     return -1;
+ 210              		.loc 1 30 0
+ 211 00e3 4183C8FF 		or	r8d, -1
+ 212              	.LVL13:
+ 213 00e7 660F1F84 		.p2align 4,,10
+ 213      00000000 
+ 213      00
+ 214              		.p2align 3
+ 215              	.L22:
+ 216              	.LBE23:
+ 217              	.LBE26:
+ 218              	.LBB27:
+ 219              	.LBB28:
+ 220              		.file 2 "/usr/include/x86_64-linux-gnu/bits/stdio2.h"
+   1:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** /* Checking macros for stdio functions.
+   2:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    Copyright (C) 2004, 2005, 2007, 2008, 2012 Free Software Foundation, Inc.
+   3:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    This file is part of the GNU C Library.
+   4:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+   5:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    The GNU C Library is free software; you can redistribute it and/or
+   6:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    modify it under the terms of the GNU Lesser General Public
+   7:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    License as published by the Free Software Foundation; either
+   8:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    version 2.1 of the License, or (at your option) any later version.
+   9:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  10:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    The GNU C Library is distributed in the hope that it will be useful,
+  11:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    but WITHOUT ANY WARRANTY; without even the implied warranty of
+  12:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  13:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    Lesser General Public License for more details.
+  14:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  15:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    You should have received a copy of the GNU Lesser General Public
+  16:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    License along with the GNU C Library; if not, see
+  17:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****    <http://www.gnu.org/licenses/>.  */
+  18:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+GAS LISTING strindex_smarter.s 			page 7
+
+
+  19:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #ifndef _STDIO_H
+  20:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** # error "Never include <bits/stdio2.h> directly; use <stdio.h> instead."
+  21:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #endif
+  22:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  23:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __sprintf_chk (char *__restrict __s, int __flag, size_t __slen,
+  24:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			  const char *__restrict __format, ...) __THROW;
+  25:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __vsprintf_chk (char *__restrict __s, int __flag, size_t __slen,
+  26:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			   const char *__restrict __format,
+  27:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			   _G_va_list __ap) __THROW;
+  28:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  29:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #ifdef __va_arg_pack
+  30:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __fortify_function int
+  31:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __NTH (sprintf (char *__restrict __s, const char *__restrict __fmt, ...))
+  32:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** {
+  33:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+  34:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 				  __bos (__s), __fmt, __va_arg_pack ());
+  35:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** }
+  36:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #elif !defined __cplusplus
+  37:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** # define sprintf(str, ...) \
+  38:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   __builtin___sprintf_chk (str, __USE_FORTIFY_LEVEL - 1, __bos (str), \
+  39:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			   __VA_ARGS__)
+  40:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #endif
+  41:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  42:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __fortify_function int
+  43:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __NTH (vsprintf (char *__restrict __s, const char *__restrict __fmt,
+  44:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 		 _G_va_list __ap))
+  45:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** {
+  46:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   return __builtin___vsprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+  47:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 				   __bos (__s), __fmt, __ap);
+  48:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** }
+  49:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  50:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #if defined __USE_BSD || defined __USE_ISOC99 || defined __USE_UNIX98
+  51:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  52:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __snprintf_chk (char *__restrict __s, size_t __n, int __flag,
+  53:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			   size_t __slen, const char *__restrict __format,
+  54:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			   ...) __THROW;
+  55:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __vsnprintf_chk (char *__restrict __s, size_t __n, int __flag,
+  56:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			    size_t __slen, const char *__restrict __format,
+  57:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			    _G_va_list __ap) __THROW;
+  58:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  59:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** # ifdef __va_arg_pack
+  60:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __fortify_function int
+  61:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __NTH (snprintf (char *__restrict __s, size_t __n,
+  62:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 		 const char *__restrict __fmt, ...))
+  63:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** {
+  64:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   return __builtin___snprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+  65:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 				   __bos (__s), __fmt, __va_arg_pack ());
+  66:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** }
+  67:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** # elif !defined __cplusplus
+  68:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #  define snprintf(str, len, ...) \
+  69:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   __builtin___snprintf_chk (str, len, __USE_FORTIFY_LEVEL - 1, __bos (str), \
+  70:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			    __VA_ARGS__)
+  71:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** # endif
+  72:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  73:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __fortify_function int
+  74:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __NTH (vsnprintf (char *__restrict __s, size_t __n,
+  75:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 		  const char *__restrict __fmt, _G_va_list __ap))
+GAS LISTING strindex_smarter.s 			page 8
+
+
+  76:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** {
+  77:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   return __builtin___vsnprintf_chk (__s, __n, __USE_FORTIFY_LEVEL - 1,
+  78:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 				    __bos (__s), __fmt, __ap);
+  79:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** }
+  80:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  81:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #endif
+  82:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  83:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** #if __USE_FORTIFY_LEVEL > 1
+  84:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  85:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __fprintf_chk (FILE *__restrict __stream, int __flag,
+  86:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			  const char *__restrict __format, ...);
+  87:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __printf_chk (int __flag, const char *__restrict __format, ...);
+  88:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __vfprintf_chk (FILE *__restrict __stream, int __flag,
+  89:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			   const char *__restrict __format, _G_va_list __ap);
+  90:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** extern int __vprintf_chk (int __flag, const char *__restrict __format,
+  91:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			  _G_va_list __ap);
+  92:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+  93:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** # ifdef __va_arg_pack
+  94:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __fortify_function int
+  95:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** fprintf (FILE *__restrict __stream, const char *__restrict __fmt, ...)
+  96:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** {
+  97:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   return __fprintf_chk (__stream, __USE_FORTIFY_LEVEL - 1, __fmt,
+  98:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 			__va_arg_pack ());
+  99:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** }
+ 100:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** 
+ 101:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** __fortify_function int
+ 102:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** printf (const char *__restrict __fmt, ...)
+ 103:/usr/include/x86_64-linux-gnu/bits/stdio2.h **** {
+ 104:/usr/include/x86_64-linux-gnu/bits/stdio2.h ****   return __printf_chk (__USE_FORTIFY_LEVEL - 1, __fmt, __va_arg_pack ());
+ 221              		.loc 2 104 0
+ 222 00f0 4889E1   		mov	rcx, rsp
+ 223 00f3 31C0     		xor	eax, eax
+ 224 00f5 4889DA   		mov	rdx, rbx
+ 225 00f8 BE000000 		mov	esi, OFFSET FLAT:.LC1
+ 225      00
+ 226 00fd BF010000 		mov	edi, 1
+ 226      00
+ 227 0102 E8000000 		call	__printf_chk
+ 227      00
+ 228              	.LVL14:
+ 229              	.LBE28:
+ 230              	.LBE27:
+ 231              	.LBB29:
+ 232              	.LBB30:
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 233              		.loc 1 10 0
+ 234 0107 0FB64C24 		movzx	ecx, BYTE PTR [rsp+32]
+ 234      20
+ 235 010c 84C9     		test	cl, cl
+ 236 010e 0F849301 		je	.L42
+ 236      0000
+ 237 0114 0FB67C24 		movzx	edi, BYTE PTR [rsp+16]
+ 237      10
+ 238 0119 4C8D6C24 		lea	r13, [rsp+16]
+ 238      10
+ 239              	.LVL15:
+ 240 011e 31F6     		xor	esi, esi
+GAS LISTING strindex_smarter.s 			page 9
+
+
+ 241              	.LVL16:
+ 242              		.p2align 4,,10
+ 243              		.p2align 3
+ 244              	.L27:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 245              		.loc 1 12 0
+ 246 0120 4084FF   		test	dil, dil
+ 247 0123 4189F0   		mov	r8d, esi
+ 248 0126 741F     		je	.L28
+ 249 0128 4038CF   		cmp	dil, cl
+ 250 012b 7433     		je	.L26
+  42:strindex_smarter.c ****     printf("strindex(%s,%s) = %d\n", s1, s3, strindex(s1, s3));
+ 251              		.loc 1 42 0
+ 252 012d 4C89E8   		mov	rax, r13
+ 253 0130 EB0A     		jmp	.L29
+ 254              	.LVL17:
+ 255              		.p2align 4,,10
+ 256 0132 660F1F44 		.p2align 3
+ 256      0000
+ 257              	.L82:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 258              		.loc 1 12 0
+ 259 0138 38CA     		cmp	dl, cl
+ 260 013a 7424     		je	.L26
+ 261              	.L29:
+ 262 013c 4883C001 		add	rax, 1
+ 263              	.LVL18:
+ 264 0140 0FB610   		movzx	edx, BYTE PTR [rax]
+ 265 0143 84D2     		test	dl, dl
+ 266 0145 75F1     		jne	.L82
+ 267              	.LVL19:
+ 268              	.L28:
+ 269 0147 4883C601 		add	rsi, 1
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 270              		.loc 1 10 0
+ 271 014b 0FB60C33 		movzx	ecx, BYTE PTR [rbx+rsi]
+ 272 014f 84C9     		test	cl, cl
+ 273 0151 75CD     		jne	.L27
+  30:strindex_smarter.c ****     return -1;
+ 274              		.loc 1 30 0
+ 275 0153 4183C8FF 		or	r8d, -1
+ 276              	.LVL20:
+ 277 0157 660F1F84 		.p2align 4,,10
+ 277      00000000 
+ 277      00
+ 278              		.p2align 3
+ 279              	.L26:
+ 280              	.LBE30:
+ 281              	.LBE29:
+ 282              	.LBB32:
+ 283              	.LBB33:
+ 284              		.loc 2 104 0
+ 285 0160 4C89E9   		mov	rcx, r13
+ 286 0163 31C0     		xor	eax, eax
+ 287 0165 4889DA   		mov	rdx, rbx
+ 288 0168 BE000000 		mov	esi, OFFSET FLAT:.LC1
+ 288      00
+GAS LISTING strindex_smarter.s 			page 10
+
+
+ 289 016d BF010000 		mov	edi, 1
+ 289      00
+ 290 0172 E8000000 		call	__printf_chk
+ 290      00
+ 291              	.LVL21:
+ 292              	.LBE33:
+ 293              	.LBE32:
+ 294              	.LBB34:
+ 295              	.LBB35:
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 296              		.loc 1 10 0
+ 297 0177 0FB64C24 		movzx	ecx, BYTE PTR [rsp+32]
+ 297      20
+ 298 017c 84C9     		test	cl, cl
+ 299 017e 0F843101 		je	.L45
+ 299      0000
+ 300 0184 0FB67C24 		movzx	edi, BYTE PTR [rsp+48]
+ 300      30
+ 301 0189 4C8D7424 		lea	r14, [rsp+48]
+ 301      30
+ 302              	.LVL22:
+ 303 018e 31F6     		xor	esi, esi
+ 304              	.LVL23:
+ 305              		.p2align 4,,10
+ 306              		.p2align 3
+ 307              	.L31:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 308              		.loc 1 12 0
+ 309 0190 4084FF   		test	dil, dil
+ 310 0193 4189F0   		mov	r8d, esi
+ 311 0196 741F     		je	.L32
+ 312 0198 4038CF   		cmp	dil, cl
+ 313 019b 7433     		je	.L30
+  43:strindex_smarter.c ****     printf("strindex(%s,%s) = %d\n", s1, s4, strindex(s1, s4));
+ 314              		.loc 1 43 0
+ 315 019d 4C89F0   		mov	rax, r14
+ 316 01a0 EB0A     		jmp	.L33
+ 317              	.LVL24:
+ 318              		.p2align 4,,10
+ 319 01a2 660F1F44 		.p2align 3
+ 319      0000
+ 320              	.L83:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 321              		.loc 1 12 0
+ 322 01a8 38CA     		cmp	dl, cl
+ 323 01aa 7424     		je	.L30
+ 324              	.L33:
+ 325 01ac 4883C001 		add	rax, 1
+ 326              	.LVL25:
+ 327 01b0 0FB610   		movzx	edx, BYTE PTR [rax]
+ 328 01b3 84D2     		test	dl, dl
+ 329 01b5 75F1     		jne	.L83
+ 330              	.LVL26:
+ 331              	.L32:
+ 332 01b7 4883C601 		add	rsi, 1
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 333              		.loc 1 10 0
+GAS LISTING strindex_smarter.s 			page 11
+
+
+ 334 01bb 0FB60C33 		movzx	ecx, BYTE PTR [rbx+rsi]
+ 335 01bf 84C9     		test	cl, cl
+ 336 01c1 75CD     		jne	.L31
+  30:strindex_smarter.c ****     return -1;
+ 337              		.loc 1 30 0
+ 338 01c3 4183C8FF 		or	r8d, -1
+ 339              	.LVL27:
+ 340 01c7 660F1F84 		.p2align 4,,10
+ 340      00000000 
+ 340      00
+ 341              		.p2align 3
+ 342              	.L30:
+ 343              	.LBE35:
+ 344              	.LBE34:
+ 345              	.LBB37:
+ 346              	.LBB38:
+ 347              		.loc 2 104 0
+ 348 01d0 4889DA   		mov	rdx, rbx
+ 349 01d3 31C0     		xor	eax, eax
+ 350 01d5 4C89F1   		mov	rcx, r14
+ 351 01d8 BE000000 		mov	esi, OFFSET FLAT:.LC1
+ 351      00
+ 352 01dd BF010000 		mov	edi, 1
+ 352      00
+ 353 01e2 E8000000 		call	__printf_chk
+ 353      00
+ 354              	.LVL28:
+ 355              	.LBE38:
+ 356              	.LBE37:
+ 357              	.LBB39:
+ 358              	.LBB40:
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 359              		.loc 1 10 0
+ 360 01e7 0FB65424 		movzx	edx, BYTE PTR [rsp+32]
+ 360      20
+  30:strindex_smarter.c ****     return -1;
+ 361              		.loc 1 30 0
+ 362 01ec 41B8FFFF 		mov	r8d, -1
+ 362      FFFF
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 363              		.loc 1 10 0
+ 364 01f2 84D2     		test	dl, dl
+ 365 01f4 744A     		je	.L34
+ 366 01f6 0FB67C24 		movzx	edi, BYTE PTR [rsp+80]
+ 366      50
+ 367 01fb 31C9     		xor	ecx, ecx
+ 368              	.LVL29:
+ 369 01fd 0F1F00   		.p2align 4,,10
+ 370              		.p2align 3
+ 371              	.L35:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 372              		.loc 1 12 0
+ 373 0200 4084FF   		test	dil, dil
+ 374 0203 4189C8   		mov	r8d, ecx
+ 375 0206 7421     		je	.L36
+ 376 0208 4038D7   		cmp	dil, dl
+ 377 020b 7433     		je	.L34
+GAS LISTING strindex_smarter.s 			page 12
+
+
+  44:strindex_smarter.c ****     printf("strindex(%s,%s) = %d\n", s1, s5, strindex(s1, s5));
+ 378              		.loc 1 44 0
+ 379 020d 4889E8   		mov	rax, rbp
+ 380 0210 EB0B     		jmp	.L37
+ 381              	.LVL30:
+ 382              		.p2align 4,,10
+ 383 0212 660F1F44 		.p2align 3
+ 383      0000
+ 384              	.L84:
+  12:strindex_smarter.c ****         for (; *t && (*t != *s); t++);
+ 385              		.loc 1 12 0
+ 386 0218 4038D6   		cmp	sil, dl
+ 387 021b 7423     		je	.L34
+ 388              	.L37:
+ 389 021d 4883C001 		add	rax, 1
+ 390              	.LVL31:
+ 391 0221 0FB630   		movzx	esi, BYTE PTR [rax]
+ 392 0224 4084F6   		test	sil, sil
+ 393 0227 75EF     		jne	.L84
+ 394              	.LVL32:
+ 395              	.L36:
+ 396 0229 4883C101 		add	rcx, 1
+  10:strindex_smarter.c ****     for (i = 0; *s; s++, ++i)
+ 397              		.loc 1 10 0
+ 398 022d 0FB6140B 		movzx	edx, BYTE PTR [rbx+rcx]
+ 399 0231 84D2     		test	dl, dl
+ 400 0233 75CB     		jne	.L35
+  30:strindex_smarter.c ****     return -1;
+ 401              		.loc 1 30 0
+ 402 0235 4183C8FF 		or	r8d, -1
+ 403              	.LVL33:
+ 404 0239 0F1F8000 		.p2align 4,,10
+ 404      000000
+ 405              		.p2align 3
+ 406              	.L34:
+ 407              	.LBE40:
+ 408              	.LBE39:
+ 409              	.LBB41:
+ 410              	.LBB42:
+ 411              		.loc 2 104 0
+ 412 0240 4889E9   		mov	rcx, rbp
+ 413 0243 4889DA   		mov	rdx, rbx
+ 414 0246 BE000000 		mov	esi, OFFSET FLAT:.LC1
+ 414      00
+ 415 024b BF010000 		mov	edi, 1
+ 415      00
+ 416 0250 31C0     		xor	eax, eax
+ 417 0252 E8000000 		call	__printf_chk
+ 417      00
+ 418              	.LVL34:
+ 419              	.LBE42:
+ 420              	.LBE41:
+ 421              	.LBB43:
+ 422              	.LBB44:
+ 423 0257 4889DA   		mov	rdx, rbx
+ 424 025a 31C0     		xor	eax, eax
+ 425 025c 4D89F1   		mov	r9, r14
+GAS LISTING strindex_smarter.s 			page 13
+
+
+ 426 025f 4D89E8   		mov	r8, r13
+ 427 0262 4889E1   		mov	rcx, rsp
+ 428 0265 BE000000 		mov	esi, OFFSET FLAT:.LC2
+ 428      00
+ 429 026a BF010000 		mov	edi, 1
+ 429      00
+ 430 026f E8000000 		call	__printf_chk
+ 430      00
+ 431              	.LVL35:
+ 432              	.LBE44:
+ 433              	.LBE43:
+  45:strindex_smarter.c ****     printf("s1:%s, s2:%s,s3:%s,s4:%s\n", s1, s2, s3, s4);
+  46:strindex_smarter.c **** 
+  47:strindex_smarter.c ****     return 0;
+  48:strindex_smarter.c **** 
+  49:strindex_smarter.c ****     return 0;
+  50:strindex_smarter.c **** }...
+ 434              		.loc 1 50 0
+ 435 0274 31C0     		xor	eax, eax
+ 436 0276 488B9424 		mov	rdx, QWORD PTR [rsp+296]
+ 436      28010000 
+ 437 027e 64483314 		xor	rdx, QWORD PTR fs:40
+ 437      25280000 
+ 437      00
+ 438 0287 753A     		jne	.L85
+ 439 0289 4881C430 		add	rsp, 304
+ 439      010000
+ 440              	.LCFI6:
+ 441              		.cfi_remember_state
+ 442              		.cfi_def_cfa_offset 48
+ 443              	.LVL36:
+ 444 0290 5B       		pop	rbx
+ 445              	.LCFI7:
+ 446              		.cfi_def_cfa_offset 40
+ 447              	.LVL37:
+ 448 0291 5D       		pop	rbp
+ 449              	.LCFI8:
+ 450              		.cfi_def_cfa_offset 32
+ 451 0292 415C     		pop	r12
+ 452              	.LCFI9:
+ 453              		.cfi_def_cfa_offset 24
+ 454 0294 415D     		pop	r13
+ 455              	.LCFI10:
+ 456              		.cfi_def_cfa_offset 16
+ 457 0296 415E     		pop	r14
+ 458              	.LCFI11:
+ 459              		.cfi_def_cfa_offset 8
+ 460 0298 C3       		ret
+ 461              	.LVL38:
+ 462              	.L39:
+ 463              	.LCFI12:
+ 464              		.cfi_restore_state
+ 465              	.LBB45:
+ 466              	.LBB24:
+  30:strindex_smarter.c ****     return -1;
+ 467              		.loc 1 30 0
+ 468 0299 4183C8FF 		or	r8d, -1
+GAS LISTING strindex_smarter.s 			page 14
+
+
+ 469 029d 488D5C24 		lea	rbx, [rsp+32]
+ 469      20
+ 470              	.LVL39:
+ 471 02a2 E949FEFF 		jmp	.L22
+ 471      FF
+ 472              	.LVL40:
+ 473              	.L42:
+ 474              	.LBE24:
+ 475              	.LBE45:
+ 476              	.LBB46:
+ 477              	.LBB31:
+ 478 02a7 4183C8FF 		or	r8d, -1
+ 479 02ab 4C8D6C24 		lea	r13, [rsp+16]
+ 479      10
+ 480              	.LVL41:
+ 481 02b0 E9ABFEFF 		jmp	.L26
+ 481      FF
+ 482              	.LVL42:
+ 483              	.L45:
+ 484              	.LBE31:
+ 485              	.LBE46:
+ 486              	.LBB47:
+ 487              	.LBB36:
+ 488 02b5 4183C8FF 		or	r8d, -1
+ 489 02b9 4C8D7424 		lea	r14, [rsp+48]
+ 489      30
+ 490              	.LVL43:
+ 491 02be E90DFFFF 		jmp	.L30
+ 491      FF
+ 492              	.LVL44:
+ 493              	.L85:
+ 494              	.LBE36:
+ 495              	.LBE47:
+ 496              		.loc 1 50 0
+ 497 02c3 E8000000 		call	__stack_chk_fail
+ 497      00
+ 498              	.LVL45:
+ 499              		.cfi_endproc
+ 500              	.LFE25:
+ 502              		.text
+ 503              	.Letext0:
+ 504              		.file 3 "/usr/lib/gcc/x86_64-linux-gnu/4.7/include/stddef.h"
+ 505              		.file 4 "/usr/include/x86_64-linux-gnu/bits/types.h"
+ 506              		.file 5 "/usr/include/libio.h"
+ 507              		.file 6 "/usr/include/stdio.h"
+GAS LISTING strindex_smarter.s 			page 15
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 strindex_smarter.c
+  strindex_smarter.s:8      .text:0000000000000000 strindex
+  strindex_smarter.s:90     .text.startup:0000000000000000 main
+  strindex_smarter.s:84     .rodata.str1.8:0000000000000000 .LC0
+
+UNDEFINED SYMBOLS
+__printf_chk
+__stack_chk_fail

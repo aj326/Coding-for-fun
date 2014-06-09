@@ -1,0 +1,75 @@
+This class has taught me rules. Great artists say, "You break the rules
+when you master them."
+Once you understand that bits are the language of computers, you learn
+how to mold them to show your artistic look. What are humans but
+machines with a sense of creativity?
+This class has taught me many small skills that together have bettered
+my understanding of what happens when I type a key on my keyboard or
+click a file in my file manager. I am now comfortable with vim and
+linux. Hex numbers make sense. So do binary digits. This class has
+burrowed through many abstractions that I was complying to
+without thinking about the underlining mechanics. It reminds me of
+cooking--when I was a kid, I would just eat the food that my mother had
+prepared. Now, after I've cooked, I understand why milk doesn't go with
+fish, and why a cake takes an hour to bake.
+Lab0 was the most difficult lab. It was like baking my first cake.
+The instructions were strange--beat eggs? left shift? 350 degrees?
+compile over SSH? My first cake tasted spongy. My first lab was ugly.
+Now, when I look back at the sum7 problem, I smile and think, "Really,
+this took three hours to figure out?" Learning happens inductively.
+This class is an example.
+I feel like I get it better when someone says computers are ones and
+zeros. Yet I know very little about how a monitor displays "t", even
+though I realize that "t" is 8 ones and zeros to a computer.I have
+learned that multiplying is somewhat hard, and dividing is ridiculous.
+I still don't know how to straight-line code an algorithm that figures
+out if 3 divides a number.
+Our lessons in assembly reinforced my understanding of bits, bytes,
+words and processors. Our y86 lectures taught me how to manipulate
+locations in memomory to do somewhat useful tasks. I feel like I grasp
+recursion better, and I appreciate the power of the XOR operation.
+Then we learned about the difference between optimization and
+effeciency: optimization concerns making the best of finite resources,
+whereas effeciency speaks of theoratical improvements in abstract
+algorithms.
+We then learned about memory. Now, when I look at specs of a computer,
+I understand a little better what bus speed means, what caches refer 
+to, and what SDRAM and DRAM are (static vs dynamic). I also get why
+defragging makes the OS run faster (seeking sectors on specfic tracks
+for scattared data chunks is far more expensive than sequentially
+reading data), and why I shouldn't store my music on my SSD drive.
+I've enjoyed this class. And I'm looking forward for taking CS439.
+Great artists say, "You break the rules when you master them." But
+what if you are always mastering them?
+#include <stdio.h>
+#include <stdlib.h>
+int main(){
+char c;
+int flag = 1;
+int linefeed =0;  //max = 60
+int linelength=0; //max per line = 72
+int pagebreak=0; //must be one by end of read
+FILE * file;
+file = fopen("aj326.txt", "r");
+if (file==NULL)
+perror("ERROR opening aj326.txt");
+else{
+while(c != -1 && flag!=0)
+{
+c = fgetc(file); //read char
+flag = ((c>=32 && c<=126) || (c == 10) || (c==12)) || (c==-1)
+&& (pagebreak<=1) && linelength<=72 && linefeed <= 60;
+if (c == 10){
+linelength=0;
+linefeed++;
+}
+if (c == 12){
+pagebreak++;linefeed = 0;}
+linelength++;
+}
+}
+printf("char = %d; pagebreak = %d; linelength = %d; linefeed = %d;
+flag = %d\n", c, pagebreak, linelength, linefeed, flag);
+return flag && pagebreak;
+}
+
